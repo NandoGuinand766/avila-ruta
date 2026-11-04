@@ -18,6 +18,24 @@ App de senderismo para el Parque Nacional Waraira Repano (El Ávila), en Caracas
 
 Ábrela una vez con señal para que guarde el mapa.
 
+## App nativa de iPhone
+
+En `ios/` está la app nativa (Capacitor). Además de todo lo de la app web, en el iPhone:
+
+- **GPS con la pantalla bloqueada** durante la navegación, con avisos por voz y vibración en cada cruce.
+- **Transferir datos desde Apple Salud:** Apple Watch y las apps que guardan ahí el recorrido (por ejemplo Garmin Connect), con pulso.
+- La pantalla se mantiene encendida mientras navegas.
+
+Cada cambio se compila en un Mac de GitHub (pestaña **Actions → App de iPhone**). Para instalarla en un iPhone o publicarla en el App Store hace falta una cuenta de Apple Developer.
+
+Para compilar en un Mac:
+
+```bash
+npm ci
+npm run ios
+open ios/App/App.xcodeproj
+```
+
 ## Datos
 
 - Senderos y puntos de interés: © colaboradores de [OpenStreetMap](https://www.openstreetmap.org/copyright), licencia ODbL.
