@@ -1,0 +1,9 @@
+{
+  "appId": "com.nandoguinand.avilaruta",
+  "appName": "Ávila Ruta",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#0a0a0a"
+  }
+}

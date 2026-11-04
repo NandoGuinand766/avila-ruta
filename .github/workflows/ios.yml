@@ -1,0 +1,51 @@
+# Compila la app nativa de iPhone en un Mac de GitHub cada vez que cambia el código.
+# Por ahora compila para el simulador (sin firma). Para instalarla en un iPhone hace falta
+# una cuenta de Apple Developer y agregar los certificados como secretos del repositorio.
+name: App de iPhone
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "ios/**"
+      - "plugins/**"
+      - "package*.json"
+      - "capacitor.config.json"
+      - ".github/workflows/ios.yml"
+  workflow_dispatch:
+
+jobs:
+  compilar:
+    name: Compilar para iPhone (simulador)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Armar la app y copiarla al proyecto de iPhone
+        run: npm run ios
+
+      - name: Versión de Xcode
+        run: xcodebuild -version
+
+      - name: Compilar
+        run: |
+          set -o pipefail
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -80
+
+      - name: Guardar la app del simulador
+        uses: actions/upload-artifact@v4
+        with:
+          name: AvilaRuta-simulador
+          path: build/Build/Products/Debug-iphonesimulator/App.app
+          retention-days: 14

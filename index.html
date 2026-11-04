@@ -73,6 +73,14 @@ const N=M.N,E=M.E,P=M.P,ADJ=N.map(()=>[]);
 E.forEach(e=>{e.tf=e.l/1000*15+e.u/8+e.d/25;e.tb=e.l/1000*15+e.d/8+e.u/25});
 E.forEach((e,i)=>{ADJ[e.a].push({e:i,to:e.b,f:1});ADJ[e.b].push({e:i,to:e.a,f:0})});
 const ENTS=P.filter(p=>p.ent),DEST=P.filter(p=>!p.ent);
+// App nativa (iPhone): GPS con la pantalla bloqueada, Apple Salud, vibración y voz. En la web, estos plugins no existen y se usa lo del navegador.
+const CX=window.capacitorExports,NAT=!!(CX&&CX.Capacitor&&CX.Capacitor.isNativePlatform()),PL=n=>NAT?CX.registerPlugin(n):null;
+const BG=PL("BackgroundGeolocation"),HAP=PL("Haptics"),AWK=PL("KeepAwake"),TTS=PL("TextToSpeech"),SAL=PL("AvilaSalud");
+// vigila la ubicación; bg = seguir con la pantalla bloqueada. ok(coords), ko(1 = sin permiso, otro = sin señal). Devuelve la función para pararla.
+function geoWatch(bg,ok,ko){
+if(BG){let id=null,dead=0;BG.addWatcher(Object.assign({requestPermissions:true,stale:false,distanceFilter:3},bg?{backgroundTitle:"Ávila Ruta",backgroundMessage:"Guiándote por la ruta"}:{}),(l,e)=>{if(e){ko(e.code=="NOT_AUTHORIZED"?1:2);return}ok({latitude:l.latitude,longitude:l.longitude,accuracy:l.accuracy,altitude:l.altitude,heading:l.bearing,speed:l.speed})}).then(i=>{id=i;if(dead)BG.removeWatcher({id:i})}).catch(()=>ko(2));return()=>{dead=1;if(id!=null)BG.removeWatcher({id})}}
+if(!navigator.geolocation){setTimeout(()=>ko(0),0);return()=>{}}
+const w=navigator.geolocation.watchPosition(p=>ok(p.coords),e=>ko(e.code),{enableHighAccuracy:true,maximumAge:2000,timeout:30000});return()=>navigator.geolocation.clearWatch(w)}
 const TN={peak:"Pico",fall:"Cascada",view:"Mirador",camp:"Campamento",post:"Puesto de guardaparques",hotel:"Hotel y teleférico"};
 const $=s=>document.querySelector(s),fm=m=>{m=Math.round(m);return (m>=60?Math.floor(m/60)+" h ":"")+(m%60||m<60?m%60+" min":"").trim()};
 const nf=(v,d=0)=>v.toLocaleString("es",{maximumFractionDigits:d,minimumFractionDigits:d,useGrouping:"always"});
@@ -197,12 +205,11 @@ svg.onwheel=e=>{e.preventDefault();const v=get(),b=svg.getBoundingClientRect(),s
 function zoom(f){S.v.w=Math.max(500,Math.min(26000,S.v.w*f));drawMap()}
 // ---------- GPS en vivo: tu ubicación en el mapa ----------
 function locBtn(){const L=S.loc;if(L&&L.on&&!L.fw&&L.x!=null){L.fw=1;S.v.cx=L.x;S.v.cy=L.y;S.v.w=Math.min(S.v.w,2400);drawMap();locPaint();return}if(L&&L.on){locOff();return}locOn()}
-function locOn(){if(!navigator.geolocation){S.loc={on:0,msg:"Este teléfono no da acceso al GPS."};render();return}
-S.loc={on:1,fw:1,x:null,msg:"Buscando señal GPS…"};render();
-S.loc.w=navigator.geolocation.watchPosition(pos=>{const L=S.loc;if(!L||!L.on)return;const c=pos.coords;L.x=(c.longitude-M.O[0])*M.CX;L.y=(c.latitude-M.O[1])*M.CY;L.acc=c.accuracy;L.alt=c.altitude;L.hd=c.heading!=null&&!isNaN(c.heading)&&(c.speed??1)>.4?c.heading:L.hd;L.lat=c.latitude;L.lon=c.longitude;L.msg="";
+function locOn(){S.loc={on:1,fw:1,x:null,msg:"Buscando señal GPS…"};render();
+S.loc.stop=geoWatch(0,c=>{const L=S.loc;if(!L||!L.on)return;L.x=(c.longitude-M.O[0])*M.CX;L.y=(c.latitude-M.O[1])*M.CY;L.acc=c.accuracy;L.alt=c.altitude;L.hd=c.heading!=null&&!isNaN(c.heading)&&(c.speed??1)>.4?c.heading:L.hd;L.lat=c.latitude;L.lon=c.longitude;L.msg="";
  if(L.fw){S.v.cx=L.x;S.v.cy=L.y;if(!L.zoomed){S.v.w=Math.min(S.v.w,2400);L.zoomed=1}}if(S.tab=="map"&&!S.nv){drawMap();locPaint()}},
- err=>{const L=S.loc;if(!L)return;if(err.code==1){navigator.geolocation.clearWatch(L.w);S.loc={on:0,msg:"Sin permiso de ubicación. Actívalo en los ajustes del teléfono para Ávila Ruta."};render()}else{L.msg="Buscando señal GPS… (bajo árboles o neblina puede tardar)";locPaint()}},{enableHighAccuracy:true,maximumAge:3000,timeout:30000})}
-function locOff(){if(S.loc&&S.loc.w!=null)navigator.geolocation.clearWatch(S.loc.w);S.loc=null;render()}
+ code=>{const L=S.loc;if(!L)return;if(code==1||code==0){L.stop&&L.stop();S.loc={on:0,msg:code==0?"Este teléfono no da acceso al GPS.":"Sin permiso de ubicación. Actívalo en los ajustes del teléfono para Ávila Ruta."};render()}else{L.msg="Buscando señal GPS… (bajo árboles o neblina puede tardar)";locPaint()}})}
+function locOff(){if(S.loc&&S.loc.stop)S.loc.stop();S.loc=null;render()}
 function locPaint(){const e=$("#locb");if(e)e.innerHTML=locInner();const b=document.querySelector('.mz button[aria-label="Mi ubicación"]');if(b)b.classList.toggle("lon",!!(S.loc&&S.loc.on))}
 function locInner(){const L=S.loc;if(!L)return"";if(!L.on||L.x==null)return `<div class="locb"><span>${esc(L.msg||"")}</span></div>`;
 // lo más cercano: sendero, entrada y lugar
@@ -281,8 +288,8 @@ const p=pt(T.me.rel,R),h=pt(T.me.rel,R-12),l=pt(T.me.rel-25,R-16),rr=pt(T.me.rel
 s+=`<path d="M${c},${c}L${h[0]},${h[1]}" stroke="#FFD400" stroke-width="8" stroke-linecap="round"/><path d="M${l[0]},${l[1]}L${p[0]},${p[1]}L${rr[0]},${rr[1]}" stroke="#FFD400" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${c}" cy="${c}" r="5" fill="#fff"/></svg>`;return s}
 const bigArrow=`<svg width="110" height="110" viewBox="0 0 110 110" style="flex:none"><circle cx="55" cy="55" r="54" fill="#141414" stroke="#2a2a2a"/><path d="M55,88V30M35,48L55,26L75,48" stroke="#FFD400" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function startNav(){const r=S.route;S.nv={r,s:0,play:0,gps:0,off:0,msg:"",v:{cx:r.G[0][0],cy:r.G[0][1],w:900},t0:Date.now(),voz:1,al:-1,t:hoy()};render();
-try{navigator.wakeLock?.request("screen").then(l=>S.nv&&(S.nv.lock=l)).catch(()=>{})}catch(e){}gps()}
-function say(t){try{navigator.vibrate?.([250,120,250])}catch(e){}if(!S.nv.voz||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";speechSynthesis.speak(u)}catch(e){}}
+if(AWK)AWK.keepAwake().catch(()=>{});else try{navigator.wakeLock?.request("screen").then(l=>S.nv&&(S.nv.lock=l)).catch(()=>{})}catch(e){}gps()}
+function say(t){if(HAP)HAP.vibrate({duration:500}).catch(()=>{});else try{navigator.vibrate?.([250,120,250])}catch(e){}if(!S.nv.voz)return;if(TTS){TTS.speak({text:t,lang:"es-ES",rate:1,category:"playback"}).catch(()=>{});return}if(!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";speechSynthesis.speak(u)}catch(e){}}
 // avisa una sola vez por cruce, a 40 m; y una vez si te sales de la ruta
 function alerts(){const V=S.nv,nj=V.r.junc.find(j=>j.s>V.s+3);if(nj&&nj.s-V.s<=40&&V.al!=nj.i){V.al=nj.i;say("En "+Math.max(10,Math.round((nj.s-V.s)/10)*10)+" metros, "+turn(V.r,nj).t.toLowerCase())}
 if(V.off&&!V.offA){V.offA=1;say("Te saliste de la ruta")}if(!V.off)V.offA=0}
@@ -297,16 +304,15 @@ ${V.gps?`<p class="mu" style="margin:4px 0">${V.msg||"Usando el GPS del teléfon
 function navTo(s,keep){const V=S.nv;V.s=Math.max(0,Math.min(V.r.L,s));const p=at(V.r,V.s);V.v.cx=p[0];V.v.cy=p[1];alerts();paintNav();if(V.s>=V.r.L&&V.play)play()}
 function paintNav(){const o=document.querySelector(".nv");if(!o)return;const t=document.createElement("div");t.innerHTML=navV();o.replaceWith(t.firstChild);const m=$("#nmap");bindMap(m,()=>S.nv.v,v=>Object.assign(S.nv.v,v),paintNav)}
 function play(){const V=S.nv;if(V.play){clearInterval(V.play);V.play=0}else{if(V.s>=V.r.L)V.s=0;V.play=setInterval(()=>navTo(S.nv.s+12),120)}paintNav()}
-function gps(){const V=S.nv;if(V.gps){navigator.geolocation?.clearWatch(V.gps);V.gps=0;V.off=0;V.msg="";paintNav();return}
-if(!navigator.geolocation){V.msg="Este navegador no da acceso al GPS.";paintNav();return}
+function gps(){const V=S.nv;if(V.gps){V.gps();V.gps=0;V.off=0;V.msg="";paintNav();return}
 if(V.play)play();V.msg="Buscando señal GPS…";
-V.gps=navigator.geolocation.watchPosition(pos=>{const x=(pos.coords.longitude-M.O[0])*M.CX,y=(pos.coords.latitude-M.O[1])*M.CY;
+V.gps=geoWatch(1,c=>{if(S.nv!==V)return;const pos={coords:c},x=(c.longitude-M.O[0])*M.CX,y=(c.latitude-M.O[1])*M.CY;
  // primero busca cerca de donde estabas (los senderos en zigzag pasan cerca de sí mismos); si no, en toda la ruta
  const near=(lo,hi)=>{let b=1e12,bs=0;for(let i=1;i<V.r.G.length;i++){if(V.r.C[i]<lo||V.r.C[i-1]>hi)continue;const a=V.r.G[i-1],c=V.r.G[i],dx=c[0]-a[0],dy=c[1]-a[1],l2=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/l2)),d=(a[0]+dx*t-x)**2+(a[1]+dy*t-y)**2;if(d<b){b=d;bs=V.r.C[i-1]+t*Math.sqrt(l2)}}return[Math.sqrt(b),bs]};
  let[b,bs]=V.fix?near(V.s-80,V.s+400):[1e12,0];if(b>60){const g=near(-1,1e9);if(g[0]<b-20||b>=1e11)[b,bs]=g}V.fix=b<60;if(b>3000){V.msg=`Estás a ${nf(b/1000,1)} km de la ruta. Al llegar a la entrada, la guía empieza sola.`;V.off=0}else{V.msg=`GPS ±${Math.round(pos.coords.accuracy)} m`;V.off=b>40?Math.round(b):0;V.raw=[x,y];V.s=bs;V.v.cx=x;V.v.cy=y;alerts()}paintNav()},
- err=>{if(!S.nv)return;if(err.code==1){navigator.geolocation.clearWatch(V.gps);V.gps=0;V.msg="Sin permiso de ubicación. Actívalo en los ajustes del teléfono o usa la simulación."}else V.msg="Buscando señal GPS… (bajo árboles o neblina puede tardar)";paintNav()},{enableHighAccuracy:true,maximumAge:2000});paintNav()}
-function endNav(){const V=S.nv;if(V.play)clearInterval(V.play);if(V.gps)navigator.geolocation.clearWatch(V.gps);try{V.lock?.release()}catch(e){}const fin=V.s>=V.r.L-30;S.nv=null;
-if(fin){S.done.unshift({r:V.r,ts:V.t.ts,f:V.t.f,h:V.t.h,m:Math.max(1,Math.round(V.gps?(Date.now()-V.t0)/6e4:V.r.t))});save();S.tab="perfil";S.act=0}render()}
+ code=>{if(S.nv!==V)return;if(code==1||code==0){V.gps&&V.gps();V.gps=0;V.msg=code==0?"Este teléfono no da acceso al GPS. Usa la simulación.":"Sin permiso de ubicación. Actívalo en los ajustes del teléfono o usa la simulación."}else V.msg="Buscando señal GPS… (bajo árboles o neblina puede tardar)";paintNav()});paintNav()}
+function endNav(){const V=S.nv;if(V.play)clearInterval(V.play);const usedGps=!!V.gps;if(V.gps)V.gps();if(AWK)AWK.allowSleep().catch(()=>{});try{V.lock?.release()}catch(e){}const fin=V.s>=V.r.L-30;S.nv=null;
+if(fin){S.done.unshift({r:V.r,ts:V.t.ts,f:V.t.f,h:V.t.h,m:Math.max(1,Math.round(usedGps?(Date.now()-V.t0)/6e4:V.r.t))});save();S.tab="perfil";S.act=0}render()}
 function markDone(){const t=hoy();S.done.unshift({r:S.route,ts:t.ts,f:t.f,h:t.h,m:Math.round(S.route.t)});save();render()}
 
 // ---------- Clima real: Open-Meteo (con corrección por altura) y, si falla, MET Norway (yr.no) ----------
@@ -412,15 +418,36 @@ const r={imp:1,G,C,L,km:L/1000,up:hasE?Math.round(up):0,dn:hasE?Math.round(dn):0
  n:n||(top?top.n+(start&&start.id!=top.id?" desde "+start.n:""):"Caminata en el Ávila")};
 r.t=L/1000*15+r.up/8+r.dn/25;r.d=r.up>1500||r.km>15?3:r.up>900?2:r.up>350?1:0;r.id="imp"+g.length+"-"+Math.round(L);return r}
 const step=async t=>{S.imsg=t;render();await new Promise(r=>setTimeout(r,60))};
+// convierte los puntos del reloj en una salida guardada; lanza un error si no es del Ávila o ya estaba
+function addTrack(raw){const{g,t0}=toTrack(raw.pts),r=trackRoute(g);
+ if(!r.pass.length&&r.steps.length<2)throw new Error("Esta actividad no pasa por los senderos del Ávila que tenemos en el mapa");
+ const ts=t0||Date.now();if(S.done.some(d=>d.imp&&Math.abs(d.ts-ts)<6e4))throw new Error("Ya habías transferido esta actividad");
+ const tt=g.at(-1)[3],mv=raw.timer||(()=>{let s=0;for(let i=1;i<g.length;i++){const dt=g[i][3]-g[i-1][3],dd=Math.hypot(g[i][0]-g[i-1][0],g[i][1]-g[i-1][1]);if(dt>0&&dt<180&&dd/dt>.25)s+=dt}return s})();
+ const d0=new Date(ts),d={r,ts,f:fdate(ts),h:d0.getHours()+":"+String(d0.getMinutes()).padStart(2,"0"),m:Math.max(1,Math.round((mv||tt||r.t*60)/60)),imp:{g,n:r.n},el:tt?Math.round(tt/60):null};
+ r.t=d.m;S.done.push(d);save();return d}
+function txDone(d,msg){S.imsg="";S.watch=0;S.tab="perfil";S.act=S.done.indexOf(d);S.tx=0;S.msg=msg;render();$("main").scrollTop=0}
+// iPhone: trae de Apple Salud las caminatas nuevas (Apple Watch u otras apps que escriben en Salud) con su recorrido y pulso
+async function healthSync(){S.imsg="";S.tx=1;await step("Conectando con Apple Salud…");
+try{await SAL.requestAuthorization();await step("Buscando tus caminatas…");const{workouts}=await SAL.recentWorkouts({days:60,limit:30});
+ let skip=[];try{skip=JSON.parse(localStorage.getItem("avila-ruta-salud-omitidos")||"[]")}catch(e){}
+ const fresh=workouts.filter(w=>w.distance>300&&!skip.includes(w.id)&&!S.done.some(d=>d.imp&&Math.abs(d.ts-w.start)<6e4));
+ if(!workouts.length)throw new Error("No encontramos entrenamientos de los últimos 60 días. Si tienes, revisa en Ajustes › Salud › Acceso a datos que Ávila Ruta pueda leer Entrenamientos y Rutas de entrenamiento");
+ if(!fresh.length)throw new Error("No hay caminatas nuevas del Ávila: ya transferiste todas las de los últimos 60 días");
+ let last=null,n=0,noGps=0,away=0;
+ for(const w of fresh){await step(`Transfiriendo ${n+noGps+away+1} de ${fresh.length}…`);let R;try{R=await SAL.workoutRoute({id:w.id})}catch(e){noGps++;skip.push(w.id);continue}
+  if(!R.points||R.points.length<5){noGps++;skip.push(w.id);continue}
+  const hr=(R.hr||[]).sort((a,b)=>a[0]-b[0]);let j=0;
+  const pts=R.points.map(p=>{while(j<hr.length-1&&Math.abs(hr[j+1][0]-p[3])<=Math.abs(hr[j][0]-p[3]))j++;const h=hr[j]&&Math.abs(hr[j][0]-p[3])<90e3?Math.round(hr[j][1]):null;return{lat:p[0],lon:p[1],e:p[2],t:p[3],hr:h}});
+  try{last=addTrack({pts,timer:0});n++}catch(e){away++;skip.push(w.id)}}
+ try{localStorage.setItem("avila-ruta-salud-omitidos",JSON.stringify(skip.slice(-200)))}catch(e){}
+ if(!last)throw new Error(noGps?"Tus entrenamientos nuevos no tienen recorrido GPS en Apple Salud":"Tus entrenamientos nuevos no son del Ávila");
+ txDone(last,`✓ ${n==1?"Se transfirió 1 caminata":"Se transfirieron "+n+" caminatas"} de Apple Salud`+(away?` · ${away} de otros lugares`:"")+(noGps?` · ${noGps} sin GPS`:""))}
+catch(e){S.tx=0;const m=e.message||"error de Apple Salud";S.imsg=/^No hay caminatas nuevas/.test(m)?"✓ "+m:"No se pudo transferir: "+m;render()}}
 async function importFile(f){S.imsg="";S.tx=1;await step("Recibiendo la actividad…");
 try{let name=f.name,buf=await f.arrayBuffer();if(/\.zip$/i.test(name)){const z=await unzip(buf);name=z.name;buf=z.data}
  await step("Leyendo el recorrido GPS…");const raw=/\.fit$/i.test(name)?parseFIT(buf):parseXML(new TextDecoder().decode(buf));if(raw.pts.length<5)throw new Error("El archivo no trae un recorrido GPS");
- await step("Reconociendo los senderos del Ávila…");const{g,t0}=toTrack(raw.pts),r=trackRoute(g);
- if(!r.pass.length&&r.steps.length<2)throw new Error("Esta actividad no pasa por los senderos del Ávila que tenemos en el mapa");
- const ts=t0||Date.now();if(S.done.some(d=>d.imp&&Math.abs(d.ts-ts)<6e4))throw new Error("Ya habías importado esta actividad");
- const tt=g.at(-1)[3],mv=raw.timer||(()=>{let s=0;for(let i=1;i<g.length;i++){const dt=g[i][3]-g[i-1][3],dd=Math.hypot(g[i][0]-g[i-1][0],g[i][1]-g[i-1][1]);if(dt>0&&dt<180&&dd/dt>.25)s+=dt}return s})();
- const d0=new Date(ts),d={r,ts,f:fdate(ts),h:d0.getHours()+":"+String(d0.getMinutes()).padStart(2,"0"),m:Math.max(1,Math.round((mv||tt||r.t*60)/60)),imp:{g,n:r.n},el:tt?Math.round(tt/60):null};
- r.t=d.m;S.done.push(d);save();S.imsg="";S.watch=0;S.tab="perfil";S.act=S.done.indexOf(d);S.tx=0;S.msg="✓ Datos transferidos: "+r.pass.length+" lugares reconocidos"+(r.hasE?"":" (el archivo no trae altura)");render();$("main").scrollTop=0}
+ await step("Reconociendo los senderos del Ávila…");const d=addTrack(raw);
+ txDone(d,"✓ Datos transferidos: "+d.r.pass.length+" lugares reconocidos"+(d.r.hasE?"":" (el archivo no trae altura)"))}
 catch(e){S.tx=0;S.imsg="No se pudo transferir: "+(e.message||"archivo no reconocido");render()}}
 // marcas de relojes y dispositivos con GPS (la conexión automática llega cuando la app esté publicada)
 const DEV=[["Relojes deportivos",[["Garmin","Forerunner, Fenix, Epix, Instinct, Enduro · Garmin Connect"],["Coros","Pace, Apex, Vertix · app Coros"],["Suunto","Race, Vertical, 9 Peak · app Suunto"],["Polar","Grit X, Vantage, Pacer · Polar Flow"],["Wahoo","Elemnt Rival · app Wahoo"]]],
@@ -432,11 +459,11 @@ const pickFile=()=>{const i=document.createElement("input");i.type="file";i.acce
 const AND=/android/i.test(navigator.userAgent);
 function watchV(){const n=S.done.filter(d=>d.imp).length,last=[...S.done].filter(d=>d.imp).sort((a,b)=>b.ts-a.ts)[0],W=DEV.flatMap(x=>x[1]).filter(x=>x[0]!="Tu teléfono");
 return `<div class="sh" onclick="S.tx||(S.watch=0,render())"><div class="card" onclick="event.stopPropagation()"><div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div><b class="ttl" style="font-size:26px">${S.want?esc(S.want):"Tu reloj"}</b><div class="mu">${n?n+(n==1?" actividad transferida":" actividades transferidas")+(last?" · última: "+fdate(last.ts):""):"Pasa tus caminatas del reloj a Ávila Ruta"}</div></div><button class="chip" onclick="S.watch=0;render()">✕</button></div>
-<button class="btn" style="width:100%;margin:16px 0 6px;padding:16px;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px" onclick="pickFile()" ${S.tx?"disabled":""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9M20 4v5h-5M20 12a8 8 0 0 1-13.7 5.6L4 15M4 20v-5h5"/></svg>${S.tx?"Transfiriendo…":"Transferir datos"}</button>
-${S.imsg?`<p class="${S.imsg.startsWith("No se")?"err":"mu"}" style="margin:4px 0 0;text-align:center">${esc(S.imsg)}</p>`:`<p class="mu" style="margin:4px 0 0;text-align:center">Elige la actividad guardada en el teléfono${AND?" o compártela desde la app de tu reloj a Ávila Ruta":""}. Verás tu rendimiento y el recorrido recreado en el mapa.</p>`}
+<button class="btn" style="width:100%;margin:16px 0 6px;padding:16px;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px" onclick="${SAL?"healthSync()":"pickFile()"}" ${S.tx?"disabled":""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9M20 4v5h-5M20 12a8 8 0 0 1-13.7 5.6L4 15M4 20v-5h5"/></svg>${S.tx?"Transfiriendo…":"Transferir datos"}</button>
+${S.imsg?`<p class="${S.imsg.startsWith("No se")?"err":"mu"}" style="margin:4px 0 0;text-align:center">${esc(S.imsg)}</p>`:SAL?`<p class="mu" style="margin:4px 0 0;text-align:center">Trae tus caminatas nuevas desde Apple Salud: Apple Watch, Garmin Connect y otras apps que guardan ahí el recorrido. Verás tu rendimiento y el recorrido recreado en el mapa.</p><p style="text-align:center;margin:8px 0 0"><a href="#" onclick="pickFile();return false" style="color:var(--tx);font-size:14px">o elige un archivo (.fit, .gpx, .tcx)</a></p>`:`<p class="mu" style="margin:4px 0 0;text-align:center">Elige la actividad guardada en el teléfono${AND?" o compártela desde la app de tu reloj a Ávila Ruta":""}. Verás tu rendimiento y el recorrido recreado en el mapa.</p>`}
 <details style="margin-top:14px"><summary class="mu" style="cursor:pointer">¿De dónde saco la actividad?</summary><ol class="mu" style="padding-left:18px;margin:8px 0 0;line-height:1.6"><li><b>Garmin:</b> en connect.garmin.com (sirve desde el navegador del teléfono) abre la actividad → engranaje ⚙ → <b>Exportar original</b> o <b>Exportar a GPX</b>.</li><li><b>Otras marcas:</b> en la app del reloj busca <b>Exportar</b> o <b>Compartir</b> la actividad como .fit, .gpx o .tcx.</li><li>Vuelve aquí y toca <b>Transferir datos</b>.</li></ol></details>
 <h3>Marca de tu reloj</h3><div style="display:flex;flex-wrap:wrap;gap:6px">${W.map(([m])=>`<button class="chip ${S.want==m?"g":""}" onclick="wantDev('${m}')">${S.want==m?"✓ ":""}${m}</button>`).join("")}</div>
-<p class="mu" style="margin:12px 0 0">Muy pronto: transferencia directa desde el reloj, sin elegir archivos. Necesita la conexión oficial con cada marca y estamos trabajando en ella.</p></div></div>`}
+<p class="mu" style="margin:12px 0 0">${SAL?"Si tu reloj no es Apple Watch, activa en su app la opción de compartir con Apple Salud para que tus caminatas lleguen aquí.":"Muy pronto: transferencia directa desde el reloj, sin elegir archivos. Necesita la conexión oficial con cada marca y estamos trabajando en ella."}</p></div></div>`}
 function impV(){return `<div class="card"><b>Transferir datos del reloj</b><p class="mu" style="margin:4px 0 10px">Pasa tus caminatas del reloj: verás tu rendimiento y el recorrido recreado en el mapa.</p><button class="btn" style="width:100%" onclick="S.watch=1;render();pickFile()">Transferir datos</button></div>`}
 // ---------- Actividad tipo Strava ----------
 const me=()=>{const h=S.done;return{n:S.u,h,sub:h.length,km:h.reduce((a,d)=>a+d.r.km,0),up:h.reduce((a,d)=>a+d.r.up,0),t:h.reduce((a,d)=>a+d.m,0)}};

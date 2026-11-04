@@ -1,0 +1,9 @@
+{
+  "name": "avila-salud",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plugin de Ávila Ruta para leer entrenamientos, recorridos y pulso de Apple Salud",
+  "main": "index.js",
+  "capacitor": { "ios": { "src": "ios" } },
+  "peerDependencies": { "@capacitor/core": ">=8.0.0" }
+}
