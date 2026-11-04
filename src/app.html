@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ávila Ruta</title><!--HEAD-->
+<style id="fx">/*FONTS*/</style>
+<style>
+:root{--fb:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;--fh:"Barlow Condensed","Barlow",system-ui,sans-serif;--y:#FFD400;--k:#0a0a0a;--bg:#f6f6f4;--card:#fff;--tx:#0a0a0a;--mu:#6b6b6b;--bd:#e4e4e0;--soft:#efefeb;--trail:#7a7a74;--park:#ecebe2;--hs:.55;--ac:#0a0a0a;--warn:#b3261e;color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0a0a;--card:#141414;--tx:#f4f4f2;--mu:#9a9a96;--bd:#252525;--soft:#1c1c1c;--trail:#a5a59f;--park:#121212;--hs:1;--ac:#FFD400;--warn:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0a0a;--card:#141414;--tx:#f4f4f2;--mu:#9a9a96;--bd:#252525;--soft:#1c1c1c;--trail:#a5a59f;--park:#121212;--hs:1;--ac:#FFD400;--warn:#ff8a80;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:16px/1.45 var(--fb);-webkit-font-smoothing:antialiased}
+#app{height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto;position:relative;background:var(--bg);overflow:hidden}
+header{background:var(--k);color:#fff;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;display:flex;justify-content:space-between;align-items:center}
+header b{color:var(--y);letter-spacing:.08em;font-size:19px;white-space:nowrap;font-weight:800;font-family:var(--fh);line-height:1}
+header .hb{display:flex;gap:6px}header .wt{display:flex;align-items:center;gap:5px;font:600 13px var(--fb);color:var(--y);background:none;border:1.5px solid var(--y);padding:5px 10px 5px 8px;border-radius:99px;cursor:pointer;white-space:nowrap}header .wt svg{width:18px;height:18px;fill:var(--k);stroke:var(--y);stroke-width:1.8;stroke-linejoin:round;stroke-linecap:round}header .wt.on{background:var(--y);color:var(--k)}
+.sh{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;z-index:8}.sh>.card{width:100%;margin:0;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:90%;overflow:auto}
+main{flex:1;overflow:auto;padding:14px 16px}
+nav{display:flex;background:var(--k);padding:6px 0 calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid #1e1e1e}
+nav button{flex:1;border:0;background:none;color:#8a8a86;padding:4px 0;font:500 11px var(--fb);letter-spacing:.02em;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav svg{width:26px;height:26px;fill:var(--k);stroke:var(--y);stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;opacity:.6}
+nav .on{color:var(--y)}nav .on svg{stroke-width:2.3;opacity:1}
+h3{font:700 16px var(--fh);letter-spacing:.07em;text-transform:uppercase;color:var(--mu);margin:22px 0 8px}
+h2,.ttl{font-family:var(--fh);font-weight:700;letter-spacing:.01em;line-height:1.15}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:10px}
+.btn{background:var(--y);color:var(--k);border:0;border-radius:12px;padding:11px 14px;font:600 15px var(--fb);cursor:pointer;text-align:center;text-decoration:none;display:inline-block}
+.btn.o{background:none;color:var(--tx);border:1.5px solid var(--ac)}
+.btn.s{padding:7px 12px;font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1}
+.chip{display:inline-block;font-size:12px;font-weight:500;padding:2px 9px;border-radius:99px;border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
+.chip.g{background:var(--y);color:var(--k);border-color:var(--y)}
+button.chip{cursor:pointer;background:none;font:500 13px var(--fb);padding:4px 10px;color:var(--tx)}
+.k{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0;font-size:12px;color:var(--mu)}.k b{display:block;color:var(--tx);font:700 21px/1.15 var(--fh);letter-spacing:.01em}
+.k.k3{grid-template-columns:repeat(3,1fr)}
+input,select{width:100%;padding:12px;margin:5px 0;border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);font:16px var(--fb)}
+input:focus,select:focus{outline:2px solid var(--y);border-color:transparent}
+.bar{height:6px;background:var(--soft);border-radius:6px;overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--y)}
+.mu{color:var(--mu);font-size:13px}.err{color:var(--warn);font-size:13px}
+.warn{border-left:3px solid var(--y);font-size:13px;padding:10px 12px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--k);color:var(--y);border:1.5px solid var(--y);display:inline-flex;align-items:center;justify-content:center;font:700 16px var(--fh);flex:none}
+.li{display:flex;align-items:center;gap:12px}.li>div{flex:1;min-width:0}
+.seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin-bottom:12px}.seg button{flex:1;border:0;background:none;color:var(--mu);padding:8px 4px;border-radius:10px;font:500 14px var(--fb);cursor:pointer}.seg .on{background:var(--card);color:var(--tx);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.cmp{display:grid;grid-template-columns:1fr 70px 1fr;align-items:center;gap:8px;font:600 16px var(--fh);margin:8px 0}.cmp .l{text-align:right}.cmp .c{text-align:center;color:var(--mu);font-size:11px}
+.cmp .w{font-weight:700;color:var(--tx)}.cmp .w::after{content:" ●";color:var(--y)}
+.back{background:none;border:0;color:var(--tx);font-size:14px;padding:0 0 10px;cursor:pointer}
+.mapw{position:relative;margin:0 -16px}
+#map{width:100%;aspect-ratio:1/1;display:block;touch-action:none;background:#eeeae2;user-select:none;-webkit-user-select:none}
+.mz{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;gap:6px}
+.mz button{width:38px;height:38px;border-radius:10px;border:1px solid #333;background:var(--k);color:var(--y);font-size:20px;cursor:pointer;line-height:1}
+.att{position:absolute;right:8px;bottom:6px;font-size:9px;color:#555;background:rgba(255,255,255,.8);padding:1px 5px;border-radius:4px;opacity:.85}
+.tl{font-family:var(--fb);font-weight:600;paint-order:stroke;stroke:#fff;stroke-linejoin:round;fill:#22301e}
+.scl{position:absolute;left:10px;bottom:8px;font-size:10px;font-weight:600;color:#22301e}.scl i{display:block;height:5px;border:2px solid #22301e;border-top:0;margin-top:1px}
+.pl{display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--bd);font-size:14px}.pl:last-child{border:0}
+.pl .d{width:62px;flex:none;color:var(--mu);font:600 14px var(--fh);padding-top:1px}
+.nv{position:absolute;inset:0;background:var(--k);color:#f4f4f2;z-index:9;display:flex;flex-direction:column}
+.nv .top{display:flex;gap:14px;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) 16px 12px}
+.nv .big{font:800 40px/1 var(--fh);color:var(--y)}
+.nv .ins{font:700 21px/1.15 var(--fh);margin-top:4px}
+.nv .mu{color:#9a9a96}
+.nv svg.m{flex:1;width:100%;min-height:0;display:block;background:#eeeae2;touch-action:none}
+.nv .bot{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));border-top:1px solid #222}
+.nv .k b{color:#f4f4f2}.nv .k{color:#9a9a96}
+.nv .btn.o{color:#f4f4f2;border-color:var(--y)}
+.nv input[type=range]{accent-color:#FFD400;padding:0;margin:8px 0;border:0;background:none}
+.off{background:#b3261e;color:#fff;padding:8px 16px;font-size:14px;font-weight:600}
+</style></head><body><div id="app"></div>
+<script>
+// Mapa real del Ávila: senderos de OpenStreetMap (© colaboradores de OpenStreetMap, ODbL) y alturas SRTM.
+// Coordenadas en metros respecto al origen M.O; M.N = nodos (cruces y puntos), M.E = tramos entre nodos.
+const M=/*DATA*/;
+const N=M.N,E=M.E,P=M.P,ADJ=N.map(()=>[]);
+// tiempo de marcha por tramo: 15 min/km + 1 min por cada 8 m de subida + 1 min por cada 25 m de bajada
+E.forEach(e=>{e.tf=e.l/1000*15+e.u/8+e.d/25;e.tb=e.l/1000*15+e.d/8+e.u/25});
+E.forEach((e,i)=>{ADJ[e.a].push({e:i,to:e.b,f:1});ADJ[e.b].push({e:i,to:e.a,f:0})});
+const ENTS=P.filter(p=>p.ent),DEST=P.filter(p=>!p.ent);
+const TN={peak:"Pico",fall:"Cascada",view:"Mirador",camp:"Campamento",post:"Puesto de guardaparques",hotel:"Hotel y teleférico"};
+const $=s=>document.querySelector(s),fm=m=>{m=Math.round(m);return (m>=60?Math.floor(m/60)+" h ":"")+(m%60||m<60?m%60+" min":"").trim()};
+const nf=(v,d=0)=>v.toLocaleString("es",{maximumFractionDigits:d,minimumFractionDigits:d,useGrouping:"always"});
+const nz=s=>s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase(),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const pn=n=>P.find(p=>nz(p.n).includes(nz(n)));
+const ll=(x,y)=>[M.O[1]+y/M.CY,M.O[0]+x/M.CX];
+const gmap=p=>`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lon}`;
+
+// ---------- Rutas sobre la red de senderos ----------
+const COST={rap:a=>a.f?E[a.e].tf:E[a.e].tb,sub:a=>(a.f?E[a.e].tf:E[a.e].tb)+.25*(a.f?E[a.e].u:E[a.e].d)};
+function dj(src,cost){const n=N.length,d=Array(n).fill(Infinity),pv=Array(n).fill(null),u=Array(n).fill(0);d[src]=0;
+for(;;){let b=-1;for(let i=0;i<n;i++)if(!u[i]&&d[i]<Infinity&&(b<0||d[i]<d[b]))b=i;if(b<0)break;u[b]=1;
+for(const a of ADJ[b]){const c=d[b]+cost(a);if(c<d[a.to]){d[a.to]=c;pv[a.to]={n:b,a}}}}return{d,pv}}
+const DJC={};function djc(src,ck){const k=src+ck;return DJC[k]||(DJC[k]=dj(src,COST[ck]))}
+function legs(src,dst,cost,ck){if(src==dst)return[];const{d,pv}=ck?djc(src,ck):dj(src,cost);if(d[dst]==Infinity)return null;const st=[];let x=dst;while(x!=src){st.unshift(pv[x].a);x=pv[x].n}return st}
+// stops: ids de puntos; rt: ida y vuelta; ck: criterio
+function mk(stops,o={}){const ck=o.ck||"rap",cost=o.cost||null;let steps=[];const ns=stops.map(i=>P[i].node);
+for(let i=0;i<ns.length-1;i++){const s=legs(ns[i],ns[i+1],cost,cost?null:ck);if(!s)return null;steps=steps.concat(s)}
+if(o.rt&&ns.length>1){const s=legs(ns.at(-1),ns[0],cost,cost?null:ck);if(!s)return null;steps=steps.concat(s)}
+return build({stops,rt:!!o.rt,ck,n:o.n,steps})}
+function build(r){let km=0,up=0,dn=0,t=0;const G=[],C=[];let acc=0;
+for(const s of r.steps){const e=E[s.e];km+=e.l;up+=s.f?e.u:e.d;dn+=s.f?e.d:e.u;t+=s.f?e.tf:e.tb;
+ const g=s.f?e.g:[...e.g].reverse();g.forEach((p,i)=>{if(G.length&&i==0)return;if(G.length)acc+=Math.hypot(p[0]-G.at(-1)[0],p[1]-G.at(-1)[1]);G.push(p);C.push(acc)})}
+if(!G.length){const p=P[r.stops[0]];G.push([p.x,p.y,p.e]);C.push(0)}
+Object.assign(r,{km:km/1000,up,dn,t,G,C,L:acc});
+r.n=r.n||rname(r);r.id=r.id||rkey(r);
+// nodos recorridos con distancia acumulada
+let a2=0;const nodes=[{n:P[r.stops[0]].node,s:0}];for(const s of r.steps){a2+=E[s.e].l;nodes.push({n:s.to,s:a2,st:s})}
+const k=acc/(a2||1);nodes.forEach(x=>x.s*=k);r.nodes=nodes;
+// lugares por los que pasa
+r.pass=[];const seen=new Set();nodes.forEach((x,i)=>{for(const p of P)if(p.node==x.n){if(seen.has(p.id)&&!(i==nodes.length-1&&r.rt))continue;seen.add(p.id);r.pass.push({p,s:x.s})}});
+// cruces reales (3 o más caminos) donde hay que decidir
+r.junc=[];for(let i=1;i<nodes.length-1;i++){const x=nodes[i];if(ADJ[x.n].length>=3)r.junc.push({i,n:x.n,s:x.s,nx:nodes[i+1].st})}
+r.d=r.up>1500||r.km>15?3:r.up>900?2:r.up>350?1:0;return r}
+const rkey=r=>r.stops.join("-")+(r.rt?"r":"")+r.ck;
+function rname(r){const s=r.stops.map(i=>P[i]);if(s.length==2)return s[1].n+(s[0].ent?" desde "+s[0].n:"");return s.slice(1).map(p=>p.n).join(" + ")+(s[0].ent?" desde "+s[0].n:"")}
+function bestFrom(dst,ck="rap"){return ENTS.map(e=>({e,d:djc(e.node,ck).d[P[dst].node]})).filter(x=>x.d<Infinity).sort((a,b)=>a.d-b.d)}
+// alternativas: más rápida, menos subida y una diferente (penalizando los tramos de la primera)
+function options(stops,rt){const out=[],A=mk(stops,{rt,ck:"rap"});if(!A)return out;A.lab="Más rápida";out.push(A);
+const B=mk(stops,{rt,ck:"sub"});if(B){B.lab="Menos subida";out.push(B)}
+const used=new Set(A.steps.map(s=>s.e));const C=mk(stops,{rt,cost:a=>(used.has(a.e)?4:1)*COST.rap(a)});if(C){C.ck="alt";C.id=rkey(C);C.lab="Por otro camino";out.push(C)}
+const ov=(x,y)=>{const s=new Set(y.steps.map(z=>z.e));let c=0,t=0;x.steps.forEach(z=>{t+=E[z.e].l;if(s.has(z.e))c+=E[z.e].l});return c/(t||1)};
+return out.filter((r,i)=>r.t<=A.t*1.8&&!out.slice(0,i).some(q=>ov(r,q)>.85&&ov(q,r)>.85))}
+
+// rutas mixtas propuestas (varios destinos en una caminata)
+const MX=[
+{n:"La Silla completa: Pico Occidental y Pico Oriental",s:["Sabas Nieves","Pico Occidental","Silla de Caracas","Pico Oriental"],rt:1},
+{n:"Travesía Humboldt → Silla → Pico Oriental, bajando a Sabas Nieves",s:["Teleférico","Pico Occidental","Pico Oriental","Sabas Nieves"]},
+{n:"Pico Naiguatá por Topo Goering y el Anfiteatro",s:["Galindo","Topo Goering","Anfiteatro","Pico Naiguatá"],rt:1},
+{n:"Piedra del Indio y Pico Oriental",s:["Cachimbo","Piedra del Indio","Pico Oriental"],rt:1},
+{n:"Cascada Quebrada Quintero y mirador El Banquito",s:["Sabas Nieves","Cascada Quebrada Quintero","El Banquito"],rt:1},
+{n:"Los Venados y Hotel Humboldt (bajada en teleférico)",s:["Lomas del Viento","Los Venados","Teleférico"]},
+{n:"Lagunazo y Pico Occidental desde el Humboldt",s:["Teleférico","Lagunazo","Pico Occidental"],rt:1},
+{n:"Cueva de Los Palmeros y la Silla",s:["Chacaíto","Cueva de Los Palmeros","Silla de Caracas"],rt:1}];
+const MXR=MX.map(m=>{const ids=m.s.map(n=>pn(n).id);return mk(ids,{rt:m.rt,n:m.n})}).filter(Boolean);
+// destinos principales para "Un destino"
+const MAIN=["Pico Oriental","Pico Occidental","Pico Naiguatá","Silla de Caracas","Teleférico","Lagunazo","Los Venados","El Banquito","Piedra del Indio","Cascada Quebrada Quintero","Cascada Plantilla","Mirador El Edén","Mirador Anauco","Cueva de Los Palmeros","Topo Goering","Anfiteatro","Puerta de Hércules","Topo Tócome","Rancho Grande","Mirador Boyacá"].map(pn).filter(Boolean);
+
+// ---------- Estado ----------
+const S={u:null,tab:"map",rt:"uno",q:"",cn:[pn("Teleférico").id,pn("Pico Oriental").id],cnrt:0,route:null,selP:null,cat:"Todos",all:0,act:null,fr:null,ft:"amigos",msg:"",nv:null,done:[]};
+// lo que la persona hace queda guardado en este teléfono (funciona sin señal)
+const MES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"],MESL=["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const fdate=ts=>{const d=new Date(ts);return d.getDate()+" "+MES[d.getMonth()]+(d.getFullYear()!=new Date().getFullYear()?" "+d.getFullYear():"")};
+const KEY="avila-ruta-v1";
+function save(){try{localStorage.setItem(KEY,JSON.stringify({u:S.u,fr:FR.filter(f=>f.f).map(f=>f.id),done:S.done.map(d=>d.imp?{imp:d.imp,ts:d.ts,h:d.h,m:d.m,el:d.el}:({s:d.r.stops,rt:d.r.rt,ck:d.r.ck=="alt"?"rap":d.r.ck,n:d.r.n,ts:d.ts,h:d.h,m:d.m,demo:d.demo?1:0}))}))}catch(e){}}
+function load(){try{const o=JSON.parse(localStorage.getItem(KEY)||"null");if(!o)return 0;S.u=o.u;S.done=o.done.map(d=>d.imp?{r:trackRoute(d.imp.g,d.imp.n),imp:d.imp,ts:d.ts,h:d.h,m:d.m,el:d.el}:({r:mk(d.s,{rt:d.rt,ck:d.ck,n:d.n}),ts:d.ts||Date.now(),h:d.h,m:d.m,demo:d.demo})).filter(d=>d.r);S.done.forEach(d=>{d.f=fdate(d.ts);if(d.imp)d.r.t=d.m});S.frIds=o.fr;return 1}catch(e){return 0}}
+const hoy=()=>{const d=new Date();return{ts:+d,f:fdate(+d),h:d.getHours()+":"+String(d.getMinutes()).padStart(2,"0")}};
+// historial de ejemplo para la primera vez (se puede borrar desde Perfil > Historial)
+function seed(){const ex=[["2026-05-10","6:40",["Sabas Nieves","El Banquito"],1,1.04],["2026-05-24","7:15",["Sabas Nieves","Cascada Quebrada Quintero"],1,.95],["2026-06-14","6:20",["Cachimbo","Piedra del Indio"],1,1.08],["2026-07-05","5:45",["Sabas Nieves","Pico Occidental","Silla de Caracas","Pico Oriental"],1,1.02],["2026-08-02","7:30",["Lomas del Viento","Los Venados"],1,.97],["2026-08-30","8:10",["Teleférico","Lagunazo","Pico Occidental"],1,1],["2026-09-20","6:05",["Sabas Nieves","Pico Oriental"],1,.93],["2026-10-12","7:10",["Sabas Nieves","El Banquito"],1,.99],["2026-10-26","6:30",["Galindo","Pico Naiguatá"],1,1.05]];
+ S.done=ex.map(([d,h,st,rt,k])=>{const r=mk(st.map(n=>pn(n).id),{rt}),[H,Mi]=h.split(":").map(Number),ts=+new Date(d+"T00:00:00")+(H*60+Mi)*6e4;return{r,ts,f:fdate(ts),h,m:Math.round(r.t*k),demo:1}})}
+if(!load())seed();
+const walked=()=>{const s=new Set();S.done.forEach(d=>d.r.steps.forEach(x=>s.add(x.e)));return s};
+
+// ---------- Mapa ----------
+const MW=()=>Math.min(window.innerWidth,480);
+function fit(G,pad=1.25){let a=Infinity,b=Infinity,c=-Infinity,d=-Infinity;G.forEach(p=>{a=Math.min(a,p[0]);c=Math.max(c,p[0]);b=Math.min(b,p[1]);d=Math.max(d,p[1])});
+const w=Math.max(900,(c-a)*pad,(d-b)*pad);return{cx:(a+c)/2,cy:(b+d)/2,w}}
+const AR=()=>S.nv?1.2:1,vb=(v,ar=1)=>`${v.cx-v.w/2} ${-v.cy-v.w*ar/2} ${v.w} ${v.w*ar}`;
+const pth=G=>"M"+G.map(p=>p[0]+","+(-p[1])).join("L");
+const EP=E.map(e=>pth(e.g));
+const MAJOR=new Set(["Pico Oriental","Pico Occidental","Pico Naiguatá","Silla de Caracas (collado)","Teleférico (Hotel Humboldt)"].map(n=>P.find(p=>p.n==n)?.id));
+const ALL=fit([...ENTS,...[...MAJOR].map(i=>P[i])].map(p=>[p.x,p.y]),1.08);ALL.w*=.62;ALL.cx-=800;S.v={...ALL};
+// Estilo del mapa (siempre claro, como los mapas de siempre): parque verde, senderos marrón, mar azul
+const TR="#8b6a45",TX="#22301e";
+function sym(p,k,hi){const x=p.x,y=-p.y,r=7*k,sw=1.5*k,st=`stroke="#fff" stroke-width="${sw}"`;
+if(p.ent||p.t=="hotel")return `<rect x="${x-r}" y="${y-r}" width="${2*r}" height="${2*r}" rx="${2.5*k}" fill="#FFD400" stroke="#0a0a0a" stroke-width="${sw}"/><text x="${x}" y="${y+3.6*k}" font-size="${10*k}" font-weight="800" text-anchor="middle" fill="#0a0a0a">${p.t=="hotel"?"T":"E"}</text>`;
+if(p.t=="peak")return `<path d="M${x},${y-r*1.1}L${x+r},${y+r*.75}L${x-r},${y+r*.75}Z" fill="${hi?"#FFD400":"#3d4a35"}" stroke="${hi?"#0a0a0a":"#fff"}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+if(p.t=="fall")return `<path d="M${x},${y-r}C${x+r*.9},${y} ${x+r*.8},${y+r} ${x},${y+r}S${x-r*.9},${y} ${x},${y-r}Z" fill="${hi?"#FFD400":"#2f86d6"}" ${st}/>`;
+if(p.t=="post")return `<rect x="${x-r*.5}" y="${y-r*.5}" width="${r}" height="${r}" fill="#7d8a77" ${st}/>`;
+return `<circle cx="${x}" cy="${y}" r="${r*.65}" fill="${hi?"#FFD400":"#fff"}" stroke="#3d4a35" stroke-width="${sw}"/>`}
+function mapSVG(o={}){const v=o.v||S.v,k=v.w/MW(),wk=walked(),r=o.route,me=o.me;
+const G=M.BG;let s=`<rect x="${G[0]-3e4}" y="${-G[3]-3e4}" width="9e4" height="9e4" fill="#eeeae2"/><rect x="${G[0]-3e4}" y="${-G[3]-3e4}" width="9e4" height="${3e4+400}" fill="#aad3f0"/><image href="${M.bg}" x="${G[0]}" y="${-G[3]}" width="${G[2]-G[0]}" height="${G[3]-G[1]}" preserveAspectRatio="none"/>
+<text x="${(G[0]+G[2])/2}" y="-9700" font-size="${13*k}" fill="#3f7fb3" font-style="italic" text-anchor="middle" letter-spacing="${3*k}">MAR CARIBE</text><text x="-1500" y="4100" font-size="${13*k}" fill="#8a8170" font-style="italic" text-anchor="middle" letter-spacing="${3*k}">CARACAS</text>`;
+s+=`<path d="${M.ot.map(l=>`M${l[0][0]},${-l[0][1]}L${l[1][0]},${-l[1][1]}`).join("")}" stroke="${TR}" stroke-width="1.2" stroke-dasharray="3 3" fill="none" vector-effect="non-scaling-stroke" opacity=".7"/>`;
+s+=`<path d="${EP.filter((_,i)=>!wk.has(i)).join("")}" stroke="${TR}" stroke-width="1.8" fill="none" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+if(wk.size)s+=`<path d="${EP.filter((_,i)=>wk.has(i)).join("")}" stroke="#6b5600" stroke-width="4.4" fill="none" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="${EP.filter((_,i)=>wk.has(i)).join("")}" stroke="#FFD400" stroke-width="2.4" fill="none" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+if(r){const d=pth(r.G),cut=o.cut,dd=cut!=null?pth(r.G.slice(0,cut.i+1).concat([cut.p])):d;if(cut!=null)s+=`<path d="${d}" stroke="#0a0a0a" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="1 6" vector-effect="non-scaling-stroke" opacity=".55"/>`;s+=`<path d="${dd}" stroke="#0a0a0a" stroke-width="8" fill="none" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/><path d="${dd}" stroke="#FFD400" stroke-width="4.5" fill="none" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>`;
+ // flechas de sentido cada ~600 m
+ for(let q=300;q<r.L;q+=Math.max(600,v.w/5)){const a=at(r,q),b=at(r,q+15);const ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0])*180/Math.PI;s+=`<path d="M${-4*k},${-4*k}L${2*k},0L${-4*k},${4*k}" transform="translate(${a[0]},${-a[1]}) rotate(${ang})" stroke="#0a0a0a" stroke-width="${1.8*k}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`}
+ r.junc.forEach(j=>{const n=N[j.n];s+=`<circle cx="${n[0]}" cy="${-n[1]}" r="${3.2*k}" fill="#fff" stroke="#0a0a0a" stroke-width="${1.4*k}"/>`})}
+const lab=[],box=[],pr=p=>(S.selP==p.id||(r&&r.stops.includes(p.id)))?0:MAJOR.has(p.id)?1:p.ent?2:p.t=="post"?4:3;
+P.forEach(p=>{const hi=pr(p)==0;s+=sym(p,k*(hi?1.25:1),hi)});
+[...P].sort((a,b)=>pr(a)-pr(b)).forEach(p=>{const q=pr(p),fs=(q==0?12.5:11)*k;if(q>2&&v.w>9000||q==4&&v.w>4500)return;
+ const bx=[p.x+9*k,p.y-7*k,p.x+(12+p.n.length*6.3)*k,p.y+7*k];if(q>0&&box.some(o=>bx[0]<o[2]&&bx[2]>o[0]&&bx[1]<o[3]&&bx[3]>o[1]))return;box.push(bx);
+ lab.push(`<text class="tl" x="${p.x+10*k}" y="${-p.y+4*k}" font-size="${fs}" stroke-width="${3*k}">${esc(p.n)}</text>`)});
+s+=lab.join("");
+if(me)s+=`<circle cx="${me[0]}" cy="${-me[1]}" r="${16*k}" fill="#FFD400" opacity=".25"/><circle cx="${me[0]}" cy="${-me[1]}" r="${7*k}" fill="#FFD400" stroke="#0a0a0a" stroke-width="${2.5*k}"/>`;
+return s}
+function at(r,s){s=Math.max(0,Math.min(r.L,s));let i=1;while(i<r.C.length-1&&r.C[i]<s)i++;const a=r.G[i-1],b=r.G[i],f=(s-r.C[i-1])/((r.C[i]-r.C[i-1])||1);return[a[0]+(b[0]-a[0])*Math.min(1,f),a[1]+(b[1]-a[1])*Math.min(1,f),a[2]+(b[2]-a[2])*Math.min(1,f)]}
+function bindMap(svg,get,set,redraw,tap){const pt=new Map();let s0=null,moved=0;
+const st=()=>{const v=get(),ps=[...pt.values()];return{v:{...v},ps:ps.map(p=>[...p])}};
+svg.onpointerdown=e=>{svg.setPointerCapture(e.pointerId);pt.set(e.pointerId,[e.clientX,e.clientY]);s0=st();if(pt.size==1)moved=0};
+svg.onpointermove=e=>{if(!pt.has(e.pointerId))return;pt.set(e.pointerId,[e.clientX,e.clientY]);const ps=[...pt.values()],w=svg.clientWidth,v0=s0.v,sc=v0.w/w;
+ if(ps.length==1&&s0.ps.length==1){const dx=ps[0][0]-s0.ps[0][0],dy=ps[0][1]-s0.ps[0][1];if(Math.hypot(dx,dy)>6)moved=1;set({w:v0.w,cx:v0.cx-dx*sc,cy:v0.cy+dy*sc})}
+ else if(ps.length>=2&&s0.ps.length>=2){moved=1;const d0=Math.hypot(s0.ps[0][0]-s0.ps[1][0],s0.ps[0][1]-s0.ps[1][1]),d1=Math.hypot(ps[0][0]-ps[1][0],ps[0][1]-ps[1][1]);const nw=Math.max(500,Math.min(26000,v0.w*d0/d1));
+  const m0=[(s0.ps[0][0]+s0.ps[1][0])/2,(s0.ps[0][1]+s0.ps[1][1])/2],m1=[(ps[0][0]+ps[1][0])/2,(ps[0][1]+ps[1][1])/2];set({w:nw,cx:v0.cx-(m1[0]-m0[0])*sc,cy:v0.cy+(m1[1]-m0[1])*sc})}
+ svg.setAttribute("viewBox",vb(get(),svg.clientHeight/svg.clientWidth||1))};
+svg.onpointerup=svg.onpointercancel=e=>{const one=pt.size==1;pt.delete(e.pointerId);s0=st();if(one&&!moved&&tap&&e.type=="pointerup"){const b=svg.getBoundingClientRect(),v=get(),sc=v.w/b.width;tap(v.cx-v.w/2+(e.clientX-b.left)*sc,v.cy+b.height*sc/2-(e.clientY-b.top)*sc,sc)}else if(!pt.size)redraw()};
+svg.onwheel=e=>{e.preventDefault();const v=get(),b=svg.getBoundingClientRect(),sc=v.w/b.width,f=Math.exp(e.deltaY*.0015),nw=Math.max(500,Math.min(26000,v.w*f));
+ const mx=v.cx-v.w/2+(e.clientX-b.left)*sc,my=v.cy+b.height*sc/2-(e.clientY-b.top)*sc;set({w:nw,cx:mx-(mx-v.cx)*nw/v.w,cy:my-(my-v.cy)*nw/v.w});svg.setAttribute("viewBox",vb(get(),svg.clientHeight/svg.clientWidth||1));clearTimeout(svg._t);svg._t=setTimeout(redraw,180)}}
+function zoom(f){S.v.w=Math.max(500,Math.min(26000,S.v.w*f));drawMap()}
+function drawMap(){const m=$("#map");if(m)m.innerHTML=mapSVG(mapOpt()),m.setAttribute("viewBox",vb(S.v));const c=$("#scl");if(c)c.innerHTML=scl()}
+function scl(){const mpp=S.v.w/MW(),L=[100,200,500,1000,2000,5000].find(x=>x/mpp>=55)||5000;return `${L>=1000?L/1000+" km":L+" m"}<i style="width:${Math.round(L/mpp)}px"></i>`}
+function tapMap(x,y,sc){let b=null,bd=24*sc;for(const p of P){const d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;b=p}}S.selP=b?b.id:null;if(!b&&S.route){}render()}
+
+function mapV(){return `<div class="mapw"><svg id="map" viewBox="${vb(S.v)}">${mapSVG(mapOpt())}</svg><div class="mz"><button onclick="zoom(.6)" aria-label="Acercar">+</button><button onclick="zoom(1.6)" aria-label="Alejar">−</button><button onclick="S.v={...ALL};drawMap()" aria-label="Ver todo" style="font-size:13px">⤢</button></div><div class="scl" id="scl">${scl()}</div><div class="att">© OpenStreetMap · relieve SRTM</div></div>
+<div class="leg" style="display:flex;gap:14px;font-size:12px;color:var(--mu);margin:10px 0;flex-wrap:wrap"><span><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#FFD400" stroke="#0a0a0a"/></svg> Entrada</span><span><svg width="12" height="12"><path d="M6,1L11,10H1Z" fill="#3d4a35"/></svg> Pico</span><span><svg width="12" height="12"><path d="M6,1C10,6 10,11 6,11S2,6 6,1Z" fill="#2f86d6"/></svg> Cascada</span><span><svg width="20" height="8"><path d="M2,4H18" stroke="#6b5600" stroke-width="5"/><path d="M2,4H18" stroke="#FFD400" stroke-width="2.6"/></svg> Ya caminado</span><span><svg width="20" height="6"><path d="M2,3H18" stroke="#8b6a45" stroke-width="2"/></svg> Sendero</span></div>
+${S.rp?rpV():S.selP!=null?poiCard(P[S.selP]):S.route?routeCard(S.route):`${instV()}<div class="card warn">Tras los sismos del 24 de junio, Inparques restringió la mayoría de los accesos al parque. Verifica el estado actual antes de salir.</div><p class="mu" style="text-align:center">Toca una entrada, pico o cascada del mapa. Para elegir una ruta, ve a <b>Rutas</b>.</p>`}`}
+function poiCard(p){const L=p.ent?DEST.map(d=>({d,t:djc(p.node,"rap").d[d.node]})).filter(x=>x.t<Infinity&&x.d.t!="post").sort((a,b)=>a.t-b.t).slice(0,6):bestFrom(p.id).slice(0,4);
+return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><div><b class="ttl" style="font-size:20px">${esc(p.n)}</b><div class="mu">${p.ent?"Entrada al parque · "+esc(p.sub):TN[p.t]}</div></div><button class="chip" onclick="S.selP=null;render()">✕</button></div>
+<div class="k k3"><div><b>${nf(p.e)} m</b>altitud</div><div><b>${p.lat.toFixed(5)}</b>latitud</div><div><b>${p.lon.toFixed(5)}</b>longitud</div></div>
+${p.ent?`<div class="row" style="margin-bottom:12px"><a class="btn o" href="${gmap(p)}" target="_blank" rel="noopener">Cómo llegar en carro</a></div><div class="mu" style="margin-bottom:6px">Destinos desde esta entrada</div>${L.map(x=>`<button class="chip" style="margin:0 6px 6px 0" onclick="openR(mk([${p.id},${x.d.id}],{rt:1}))">${esc(x.d.n)} · ${fm(x.t)}</button>`).join("")}<div><button class="btn s o" style="margin-top:4px" onclick="S.q='${esc(p.n)}';S.tab='list';S.rt='uno';render()">Ver todos los destinos</button></div>`
+:`<div class="mu" style="margin-bottom:6px">Mejores entradas para llegar</div>${L.map(x=>`<button class="chip" style="margin:0 6px 6px 0" onclick="openR(mk([${x.e.id},${p.id}],{rt:1}))">${esc(x.e.n)} · ${fm(x.d)} ida</button>`).join("")}<div class="row" style="margin-top:6px"><button class="btn s o" onclick="S.cn=[S.cn[0]==${p.id}?S.cn[1]:S.cn[0],${p.id}];S.tab='list';S.rt='con';render()">Conectar con otro destino</button></div>`}</div>`}
+const prof=(r,h=70)=>{const w=320,mx=Math.max(...r.G.map(p=>p[2])),mn=Math.min(...r.G.map(p=>p[2])),rg=Math.max(100,mx-mn),pts=r.G.map((p,i)=>`${(r.C[i]/(r.L||1)*w).toFixed(1)},${(h-4-(p[2]-mn)/rg*(h-14)).toFixed(1)}`);
+return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:${h}px;display:block"><path d="M0,${h}L${pts.join("L")}L${w},${h}Z" fill="#FFD400" opacity=".18"/><path d="M${pts.join("L")}" fill="none" stroke="#FFD400" stroke-width="2"/><text x="2" y="10" font-size="9" fill="var(--mu)">${nf(mx)} m</text><text x="2" y="${h-6}" font-size="9" fill="var(--mu)">${nf(mn)} m</text></svg>`};
+const DF=["Fácil","Moderada","Difícil","Muy difícil"];
+const kst=r=>`<div class="k"><div><b>${nf(r.km,1)} km</b>distancia</div><div><b>+${nf(r.up)} m</b>subida</div><div><b>${fm(r.t)}</b>${r.imp?"tu tiempo":"tiempo est."}</div><div><b>${DF[r.d]}</b>nivel</div></div>`;
+function repImp(){const r=S.route,ids=[...new Set(r.pass.map(x=>x.p.id))],n=mk(ids,{n:"Repetir: "+r.n,rt:r.rt});if(n)openR(n);else{S.msg="No se pudo armar la ruta sobre los senderos del mapa.";render()}}
+function routeCard(r){if(r.imp){const ids=[...new Set(r.pass.map(x=>x.p.id))];return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b class="ttl" style="font-size:19px">${esc(r.n)}</b><button class="chip" onclick="S.route=null;render()">✕</button></div><div class="mu">Recorrido importado de tu reloj</div>${kst(r)}${r.hasE?prof(r):""}${ids.length>1?`<button class="btn" style="width:100%;margin-top:10px" onclick="repImp()">Repetir esta ruta con indicaciones</button><p class="mu" style="margin:6px 0 0">Arma la misma ruta sobre los senderos del mapa, con la flecha en cada cruce.</p>`:""}</div>`}const isDone=S.done.some(d=>d.r.id==r.id);
+return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b class="ttl" style="font-size:19px">${esc(r.n)}</b><button class="chip" onclick="S.route=null;render()">✕</button></div>
+<div class="mu">${r.rt?"Ida y vuelta":"Solo ida"} · ${r.junc.length} cruces con indicación${isDone?" · <b style='color:var(--tx)'>ya la hiciste</b>":""}</div>${kst(r)}${prof(r)}
+<div class="row" style="margin:10px 0"><button class="btn" onclick="startNav()">Empezar ruta</button><a class="btn o" href="${gmap(P[r.stops[0]])}" target="_blank" rel="noopener">Ir a la entrada</a></div>
+<div class="row"><button class="btn s o" onclick="openR(mk(S.route.stops,{rt:!S.route.rt,ck:S.route.ck=='alt'?'rap':S.route.ck}))">${r.rt?"Cambiar a solo ida":"Cambiar a ida y vuelta"}</button><button class="btn s o" onclick="markDone()">${isDone?"Hacerla otra vez":"Marcar como hecha"}</button></div>
+<h3>Lugares en el camino</h3>${r.pass.map(x=>`<div class="pl"><span class="d">km ${nf(x.s/1000,1)}</span><div>${esc(x.p.n)}<div class="mu">${x.p.ent?"Entrada":TN[x.p.t]} · ${nf(x.p.e)} m</div></div></div>`).join("")}
+<p class="mu" style="margin:10px 0 0">Tiempos estimados con la pendiente real de cada tramo. Desnivel calculado con el relieve SRTM (±30 m).</p></div>`}
+function openR(r){if(!r)return;S.route=r;S.selP=null;S.tab="map";S.v=fit(r.G);render();$("main").scrollTop=0}
+
+// ---------- Rutas: buscar, un destino, mixtas, conectar ----------
+function rrow(r,extra=""){const k="R"+Math.random().toString(36).slice(2,8);RC[k]=r;return `<div class="card" style="cursor:pointer" onclick="openR(RC['${k}'])"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><b class="ttl" style="font-size:19px">${esc(r.n)}</b>${r.lab?`<span class="chip ${r.lab=="Más rápida"?"g":""}">${r.lab}</span>`:""}</div><div class="mu">${r.rt?"Ida y vuelta":"Solo ida"} · ${r.pass.length} lugares · ${r.junc.length} cruces</div>${kst(r)}${extra}</div>`}
+const RC={};
+function listV(){for(const k in RC)delete RC[k];
+const seg=`<div class="seg">${[["uno","Un destino"],["mix","Mixtas"],["con","Conectar"]].map(([k,n])=>`<button class="${S.rt==k?"on":""}" onclick="S.rt='${k}';render()">${n}</button>`).join("")}</div>`;
+const sb=S.rt=="con"?"":`<input id="q" type="search" placeholder="Busca una entrada, pico o cascada" value="${esc(S.q)}" oninput="S.q=this.value;$('#res').innerHTML=listItems()">`;
+return seg+sb+`<div id="res">${S.rt=="con"?conV():listItems()}</div>`}
+function listItems(){const q=nz(S.q.trim());
+if(S.rt=="mix"){const f=MXR.filter(r=>!q||nz(r.n+" "+r.pass.map(x=>x.p.n).join(" ")).includes(q));return `<p class="mu" style="margin:2px 2px 8px">Caminatas que pasan por varios destinos</p>`+(f.map(r=>rrow(r,`<div class="mu">${r.pass.map(x=>esc(x.p.n)).join(" → ")}</div>`)).join("")||none())}
+if(q){const ents=ENTS.filter(e=>nz(e.n).includes(q)||nz(e.sub).includes(q)),ds=DEST.filter(d=>nz(d.n).includes(q)&&!ents.length);let h="";
+ for(const e of ents){const L=DEST.map(d=>({d,t:djc(e.node,"rap").d[d.node]})).filter(x=>x.t<Infinity&&x.d.t!="post").sort((a,b)=>a.t-b.t);
+  h+=`<div class="card"><div class="mu">Entrada al parque</div><b class="ttl" style="font-size:20px">${esc(e.n)}</b><div class="mu">${esc(e.sub)}</div><div class="k k3"><div><b>${nf(e.e)} m</b>altitud</div><div><b>${e.lat.toFixed(5)}</b>latitud</div><div><b>${e.lon.toFixed(5)}</b>longitud</div></div><div class="row"><a class="btn o s" href="${gmap(e)}" target="_blank" rel="noopener">Cómo llegar en carro</a><button class="btn o s" onclick="S.tab='map';S.selP=${e.id};S.route=null;S.v={cx:${e.x},cy:${e.y},w:3000};render()">Ver en el mapa</button></div></div>
+  <h3>${L.length} destinos desde ${esc(e.n)}</h3>`+L.map(x=>rrow(mk([e.id,x.d.id],{rt:1}),`<div class="mu">${TN[x.d.t]} · ${nf(x.d.e)} m · ${fm(x.t)} de subida</div>`)).join("")}
+ for(const d of ds.slice(0,4)){const L=bestFrom(d.id);h+=`<h3>${esc(d.n)} · ${nf(d.e)} m</h3>`+L.slice(0,3).map((x,i)=>rrow(mk([x.e.id,d.id],{rt:1}),i==0?`<div class="mu"><b style="color:var(--tx)">Mejor entrada:</b> ${esc(x.e.n)}</div>`:"")).join("")}
+ return h||none()}
+return `<p class="mu" style="margin:2px 2px 8px">Desde la entrada más cercana, ida y vuelta. Escribe una entrada (por ejemplo, “Sabas Nieves”) para ver todos sus destinos.</p>`+MAIN.map(d=>{const b=bestFrom(d.id);if(!b.length)return"";return rrow(mk([b[0].e.id,d.id],{rt:1}),`<div class="mu">Otras entradas: ${b.slice(1,4).map(x=>esc(x.e.n)+" ("+fm(x.d)+")").join(" · ")}</div>`)}).join("")}
+const none=()=>`<p class="mu" style="text-align:center;margin-top:24px">No hay resultados para “${esc(S.q)}”.</p>`;
+function conV(){const opt=sel=>[["Entradas",ENTS],["Destinos",[...DEST].sort((a,b)=>a.n.localeCompare(b.n,"es"))]].map(([g,L])=>`<optgroup label="${g}">${L.map(p=>`<option value="${p.id}" ${p.id==sel?"selected":""}>${esc(p.n)}</option>`).join("")}</optgroup>`).join("");
+const ok=S.cn.every((x,i)=>i==0||x!=S.cn[i-1]),O=ok?options(S.cn,S.cnrt):[];
+return `<p class="mu" style="margin:2px 2px 8px">Une destinos en una sola caminata. Te mostramos las mejores formas de ir de uno a otro.</p><div class="card">${S.cn.map((v,i)=>`<div class="li"><span class="chip ${i==0?"g":""}" style="width:56px;text-align:center">${i==0?"Desde":i==S.cn.length-1?"Hasta":"Luego"}</span><div><select onchange="S.cn[${i}]=+this.value;render()">${opt(v)}</select></div>${S.cn.length>2?`<button class="chip" onclick="S.cn.splice(${i},1);render()">✕</button>`:""}</div>`).join("")}
+<div class="row" style="margin-top:6px"><button class="btn s o" onclick="S.cn.reverse();render()">⇅ Invertir</button><button class="btn s o" onclick="S.cn.push(S.cn.at(-1));render()">+ Añadir parada</button><button class="btn s ${S.cnrt?"":"o"}" onclick="S.cnrt=!S.cnrt;render()">${S.cnrt?"✓ ":""}Volver al inicio</button></div></div>
+${!ok?`<p class="err">Elige destinos distintos en paradas seguidas.</p>`:O.length?`<h3>${O.length} ${O.length==1?"opción":"opciones"}</h3>`+O.map(r=>rrow(r,`<div class="mu">${r.pass.map(x=>esc(x.p.n)).join(" → ")}</div>`)).join(""):`<p class="err">Estos puntos no están conectados por senderos en el mapa.</p>`}`}
+
+// ---------- Navegación con flecha en cada cruce ----------
+const brg=(a,b)=>Math.atan2(b[0]-a[0],b[1]-a[1])*180/Math.PI;
+const nrm=a=>((a+540)%360)-180;
+function edgeOut(n,a){const g=a.f?E[a.e].g:[...E[a.e].g].reverse();let s=0;for(let i=1;i<g.length;i++){s+=Math.hypot(g[i][0]-g[i-1][0],g[i][1]-g[i-1][1]);if(s>=25||i==g.length-1)return brg(N[n],g[i])}}
+function turn(r,j){const inc=r.nodes[j.i].st,ia=ADJ[j.n].find(a=>a.e==inc.e),hin=edgeOut(j.n,ia)+180;
+const br=ADJ[j.n].map(a=>({a,rel:nrm(edgeOut(j.n,a)-hin),me:a.e==j.nx.e&&a.to==j.nx.to}));
+const back=br.find(b=>b.a.e==inc.e)||br.reduce((m,b)=>Math.abs(b.rel)>Math.abs(m.rel)?b:m,br[0]),me=br.find(b=>b.me);
+// instrucción: lado absoluto si no hay otro camino hacia ese lado; si lo hay, "más a la..." o "segundo"
+const op=br.filter(b=>b!==back).sort((a,b)=>a.rel-b.rel),sd=x=>x.rel<-25?-1:x.rel>25?1:0,LR=v=>v<0?"izquierda":"derecha";let t;
+if(me===back)t="Regresa por el mismo camino";
+else if(op.length>=3&&op.indexOf(me)>0&&op.indexOf(me)<op.length-1&&sd(me)==0)t="Toma el camino del medio, recto";
+else if(sd(me)==0&&!op.some(x=>x!==me&&sd(x)==0))t="Sigue recto";
+else{const v=sd(me)||Math.sign(me.rel),same=op.filter(x=>x!==me&&Math.sign(x.rel)==v);if(!same.length)t="Gira a la "+LR(v);else{const ext=same.every(x=>Math.abs(x.rel)<Math.abs(me.rel));t=ext?"Toma el camino más a la "+LR(v):"Toma el camino suave a la "+LR(v)}}
+return{br,back,me,t,n:br.length}}
+function jsvg(T,sz=110){const c=sz/2,R=sz*.42;let s=`<svg width="${sz}" height="${sz}" viewBox="0 0 ${sz} ${sz}" style="flex:none"><circle cx="${c}" cy="${c}" r="${c-1}" fill="#141414" stroke="#2a2a2a"/>`;
+const pt=(rel,l)=>[c+Math.sin(rel*Math.PI/180)*l,c-Math.cos(rel*Math.PI/180)*l];
+T.br.forEach(b=>{if(b===T.me)return;const q=pt(b.rel,R);s+=b===T.back?`<path d="M${c},${c}L${q[0]},${q[1]}" stroke="#FFD400" stroke-width="7" stroke-linecap="round" opacity=".4"/>`:"";if(b===T.back)return;const p=pt(b.rel,R);s+=`<path d="M${c},${c}L${p[0]},${p[1]}" stroke="#555" stroke-width="6" stroke-linecap="round"/>`});
+const p=pt(T.me.rel,R),h=pt(T.me.rel,R-12),l=pt(T.me.rel-25,R-16),rr=pt(T.me.rel+25,R-16);
+s+=`<path d="M${c},${c}L${h[0]},${h[1]}" stroke="#FFD400" stroke-width="8" stroke-linecap="round"/><path d="M${l[0]},${l[1]}L${p[0]},${p[1]}L${rr[0]},${rr[1]}" stroke="#FFD400" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${c}" cy="${c}" r="5" fill="#fff"/></svg>`;return s}
+const bigArrow=`<svg width="110" height="110" viewBox="0 0 110 110" style="flex:none"><circle cx="55" cy="55" r="54" fill="#141414" stroke="#2a2a2a"/><path d="M55,88V30M35,48L55,26L75,48" stroke="#FFD400" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function startNav(){const r=S.route;S.nv={r,s:0,play:0,gps:0,off:0,msg:"",v:{cx:r.G[0][0],cy:r.G[0][1],w:900},t0:Date.now(),voz:1,al:-1,t:hoy()};render();
+try{navigator.wakeLock?.request("screen").then(l=>S.nv&&(S.nv.lock=l)).catch(()=>{})}catch(e){}gps()}
+function say(t){try{navigator.vibrate?.([250,120,250])}catch(e){}if(!S.nv.voz||!window.speechSynthesis)return;try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="es-ES";speechSynthesis.speak(u)}catch(e){}}
+// avisa una sola vez por cruce, a 40 m; y una vez si te sales de la ruta
+function alerts(){const V=S.nv,nj=V.r.junc.find(j=>j.s>V.s+3);if(nj&&nj.s-V.s<=40&&V.al!=nj.i){V.al=nj.i;say("En "+Math.max(10,Math.round((nj.s-V.s)/10)*10)+" metros, "+turn(V.r,nj).t.toLowerCase())}
+if(V.off&&!V.offA){V.offA=1;say("Te saliste de la ruta")}if(!V.off)V.offA=0}
+function navV(){const V=S.nv,r=V.r,me=V.off&&V.raw?V.raw:at(r,V.s),nj=r.junc.find(j=>j.s>V.s+3),T=nj&&turn(r,nj),nx=r.pass.find(x=>x.s>V.s+3);
+let upL=0;for(let i=1;i<r.G.length;i++)if(r.C[i]>V.s&&r.G[i][2]>r.G[i-1][2])upL+=r.G[i][2]-r.G[i-1][2];
+const left=r.t*(1-V.s/r.L),eta=new Date(Date.now()+left*6e4);
+return `<div class="nv">${V.off?`<div class="off">Te saliste de la ruta: estás a ${nf(V.off)} m. Regresa al trazo amarillo.</div>`:""}<div class="top">${T?jsvg(T):bigArrow}<div style="min-width:0"><div class="big">${T?"En "+nf(Math.max(0,Math.round((nj.s-V.s)/10)*10))+" m":V.s>=r.L-5?"Llegaste":"Sigue el sendero"}</div><div class="ins">${T?T.t:nx?"hasta "+esc(nx.p.n):"Fin de la ruta"}</div><div class="mu" style="font-size:13px">${T?"Cruce de "+T.n+" caminos · ":""}${nx?"Próximo: "+esc(nx.p.n)+" en "+nf((nx.s-V.s)/1000,1)+" km":""}</div></div></div>
+<svg class="m" id="nmap" viewBox="${vb(V.v,1.1)}" preserveAspectRatio="xMidYMid slice">${mapSVG({route:r,me,v:V.v})}</svg>
+<div class="bot"><div class="k"><div><b>${nf(V.s/1000,1)} km</b>recorrido</div><div><b>${nf((r.L-V.s)/1000,1)} km</b>faltan</div><div><b>+${nf(upL)} m</b>por subir</div><div><b>${eta.getHours()}:${String(eta.getMinutes()).padStart(2,"0")}</b>llegada</div></div>
+${V.gps?`<p class="mu" style="margin:4px 0">${V.msg||"Usando el GPS del teléfono…"}</p>`:`<input type="range" min="0" max="${Math.round(r.L)}" value="${Math.round(V.s)}" oninput="navTo(+this.value)" aria-label="Posición en la ruta"><p class="mu" style="margin:0 0 6px">${V.msg||"Demo: arrastra la barra o pulsa ▶ para simular la caminata."}</p>`}
+<div class="row"><button class="btn o s" onclick="S.nv.voz=!S.nv.voz;paintNav()">${V.voz?"Voz: sí":"Voz: no"}</button><button class="btn o s" onclick="gps()">${V.gps?"Simular":"Usar GPS"}</button>${V.gps?"":`<button class="btn o s" onclick="play()">${V.play?"❚❚ Pausa":"▶ Simular"}</button>`}<button class="btn s" onclick="endNav()">Terminar</button></div></div></div>`}
+function navTo(s,keep){const V=S.nv;V.s=Math.max(0,Math.min(V.r.L,s));const p=at(V.r,V.s);V.v.cx=p[0];V.v.cy=p[1];alerts();paintNav();if(V.s>=V.r.L&&V.play)play()}
+function paintNav(){const o=document.querySelector(".nv");if(!o)return;const t=document.createElement("div");t.innerHTML=navV();o.replaceWith(t.firstChild);const m=$("#nmap");bindMap(m,()=>S.nv.v,v=>Object.assign(S.nv.v,v),paintNav)}
+function play(){const V=S.nv;if(V.play){clearInterval(V.play);V.play=0}else{if(V.s>=V.r.L)V.s=0;V.play=setInterval(()=>navTo(S.nv.s+12),120)}paintNav()}
+function gps(){const V=S.nv;if(V.gps){navigator.geolocation?.clearWatch(V.gps);V.gps=0;V.off=0;V.msg="";paintNav();return}
+if(!navigator.geolocation){V.msg="Este navegador no da acceso al GPS.";paintNav();return}
+if(V.play)play();V.msg="Buscando señal GPS…";
+V.gps=navigator.geolocation.watchPosition(pos=>{const x=(pos.coords.longitude-M.O[0])*M.CX,y=(pos.coords.latitude-M.O[1])*M.CY;
+ // primero busca cerca de donde estabas (los senderos en zigzag pasan cerca de sí mismos); si no, en toda la ruta
+ const near=(lo,hi)=>{let b=1e12,bs=0;for(let i=1;i<V.r.G.length;i++){if(V.r.C[i]<lo||V.r.C[i-1]>hi)continue;const a=V.r.G[i-1],c=V.r.G[i],dx=c[0]-a[0],dy=c[1]-a[1],l2=dx*dx+dy*dy||1,t=Math.max(0,Math.min(1,((x-a[0])*dx+(y-a[1])*dy)/l2)),d=(a[0]+dx*t-x)**2+(a[1]+dy*t-y)**2;if(d<b){b=d;bs=V.r.C[i-1]+t*Math.sqrt(l2)}}return[Math.sqrt(b),bs]};
+ let[b,bs]=V.fix?near(V.s-80,V.s+400):[1e12,0];if(b>60){const g=near(-1,1e9);if(g[0]<b-20||b>=1e11)[b,bs]=g}V.fix=b<60;if(b>3000){V.msg=`Estás a ${nf(b/1000,1)} km de la ruta. Al llegar a la entrada, la guía empieza sola.`;V.off=0}else{V.msg=`GPS ±${Math.round(pos.coords.accuracy)} m`;V.off=b>40?Math.round(b):0;V.raw=[x,y];V.s=bs;V.v.cx=x;V.v.cy=y;alerts()}paintNav()},
+ err=>{if(!S.nv)return;if(err.code==1){navigator.geolocation.clearWatch(V.gps);V.gps=0;V.msg="Sin permiso de ubicación. Actívalo en los ajustes del teléfono o usa la simulación."}else V.msg="Buscando señal GPS… (bajo árboles o neblina puede tardar)";paintNav()},{enableHighAccuracy:true,maximumAge:2000});paintNav()}
+function endNav(){const V=S.nv;if(V.play)clearInterval(V.play);if(V.gps)navigator.geolocation.clearWatch(V.gps);try{V.lock?.release()}catch(e){}const fin=V.s>=V.r.L-30;S.nv=null;
+if(fin){S.done.unshift({r:V.r,ts:V.t.ts,f:V.t.f,h:V.t.h,m:Math.max(1,Math.round(V.gps?(Date.now()-V.t0)/6e4:V.r.t))});save();S.tab="perfil";S.act=0}render()}
+function markDone(){const t=hoy();S.done.unshift({r:S.route,ts:t.ts,f:t.f,h:t.h,m:Math.round(S.route.t)});save();render()}
+
+// ---------- Clima real: Open-Meteo (con corrección por altura) y, si falla, MET Norway (yr.no) ----------
+const WXP=[["cima","Pico Oriental","Pico Oriental"],["hum","Hotel Humboldt","Teleférico (Hotel Humboldt)"],["nai","Pico Naiguatá","Pico Naiguatá"],["sab","Entrada Sabas Nieves","Sabas Nieves"]].map(([k,n,p])=>{const q=P.find(x=>x.n==p);return{k,n,lat:q.lat,lon:q.lon,e:q.e}});
+const WL={sun:"Despejado",partly:"Parcialmente nublado",cloud:"Nublado",fog:"Neblina",rain:"Lluvia",showers:"Chubascos",storm:"Tormenta eléctrica"};
+const wmo=c=>c==0?"sun":c<=2?"partly":c==3?"cloud":c==45||c==48?"fog":c>=95?"storm":c>=80?"showers":c>=51?"rain":"cloud";
+const metSym=s=>{s=(s||"").replace(/_(day|night|polartwilight)$/,"");return s=="clearsky"?"sun":s=="fair"||s=="partlycloudy"?"partly":s=="cloudy"?"cloud":s=="fog"?"fog":/thunder/.test(s)?"storm":/showers/.test(s)?"showers":/rain|sleet|snow/.test(s)?"rain":"cloud"};
+// neblina: 0 poca, 1 media, 2 densa (por código, visibilidad, nubes bajas y humedad)
+const fogLv=h=>h.sym=="fog"||(h.vis!=null&&h.vis<1000)||(h.fogf!=null&&h.fogf>=30)||(h.low>=80&&h.rh>=95)?2:(h.vis!=null&&h.vis<4000)||(h.fogf!=null&&h.fogf>=10)||(h.low>=50&&h.rh>=90)?1:0;
+const FOGL=["Poca","Media","Densa"];
+async function omFetch(p){const H="temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover_low,wind_speed_10m,wind_gusts_10m,precipitation,precipitation_probability,visibility,uv_index";
+const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${p.lat}&longitude=${p.lon}&elevation=${p.e}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover_low,wind_speed_10m,wind_gusts_10m,precipitation,visibility&hourly=${H}&daily=sunrise,sunset,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,weather_code&timezone=America%2FCaracas&forecast_days=3`,{signal:tmo()});
+if(!r.ok)throw new Error("open-meteo "+r.status);const d=await r.json();if(d.error)throw new Error(d.reason);
+const T=t=>Date.parse(t+(t.length==16?":00":"")+"-04:00"),h=d.hourly,c=d.current;
+const hours=h.time.map((t,i)=>({ts:T(t),t:h.temperature_2m[i],app:h.apparent_temperature[i],rh:h.relative_humidity_2m[i],low:h.cloud_cover_low[i],vis:h.visibility[i],p:h.precipitation[i],pp:h.precipitation_probability[i],sym:wmo(h.weather_code[i]),ws:h.wind_speed_10m[i],wg:h.wind_gusts_10m[i],uv:h.uv_index[i]}));
+const now={ts:T(c.time),t:c.temperature_2m,app:c.apparent_temperature,rh:c.relative_humidity_2m,low:c.cloud_cover_low,vis:c.visibility,p:c.precipitation,sym:wmo(c.weather_code),ws:c.wind_speed_10m,wg:c.wind_gusts_10m};
+const dd=d.daily,days=dd.time.map((t,i)=>({ts:T(t+"T12:00"),tmax:dd.temperature_2m_max[i],tmin:dd.temperature_2m_min[i],pp:dd.precipitation_probability_max[i],ps:dd.precipitation_sum[i],sym:wmo(dd.weather_code[i]),sr:T(dd.sunrise[i]),ss:T(dd.sunset[i])}));
+return{src:"Open-Meteo",now,hours,days}}
+async function metFetch(p){const r=await fetch(`https://api.met.no/weatherapi/locationforecast/2.0/complete?lat=${p.lat.toFixed(4)}&lon=${p.lon.toFixed(4)}&altitude=${Math.round(p.e)}`,{signal:tmo()});if(!r.ok)throw new Error("met "+r.status);
+const d=await r.json(),hours=d.properties.timeseries.filter(x=>x.data.next_1_hours).map(x=>{const i=x.data.instant.details,n=x.data.next_1_hours;return{ts:Date.parse(x.time),t:i.air_temperature,app:null,rh:i.relative_humidity,low:i.cloud_area_fraction_low,fogf:i.fog_area_fraction,p:n.details.precipitation_amount??0,pp:n.details.probability_of_precipitation??null,sym:metSym(n.summary.symbol_code),ws:i.wind_speed*3.6,wg:i.wind_speed_of_gust!=null?i.wind_speed_of_gust*3.6:null,uv:i.ultraviolet_index_clear_sky}});
+const days=[0,1,2].map(k=>{const d0=new Date(Date.now()-4*36e5);d0.setUTCHours(0,0,0,0);const a=+d0+k*864e5+4*36e5,b=a+864e5,H=hours.filter(h=>h.ts>=a&&h.ts<b);if(!H.length)return null;const s=sunTimes(a+12*36e5,p.lat,p.lon);
+ const ps=H.reduce((x,h)=>x+h.p,0),c={};H.filter(h=>{const l=new Date(h.ts-4*36e5).getUTCHours();return l>=7&&l<=17}).forEach(h=>c[h.sym]=(c[h.sym]||0)+1);
+ return{ts:a+12*36e5,tmax:Math.max(...H.map(h=>h.t)),tmin:Math.min(...H.map(h=>h.t)),pp:null,ps,sym:ps>=1?(H.some(h=>h.sym=="storm")?"storm":"showers"):Object.entries(c).sort((x,y)=>y[1]-x[1])[0]?.[0]||"cloud",sr:s[0],ss:s[1]}}).filter(Boolean);
+return{src:"MET Norway (yr.no)",now:hours[0],hours,days}}
+// salida y puesta del sol (fórmula astronómica estándar; MET no las trae)
+function sunTimes(ts,lat,lon){const r=Math.PI/180,d=new Date(ts),n=Math.round((Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate(),12)-Date.UTC(2000,0,1,12))/864e5),M_=(357.5291+.98560028*n)%360,C=1.9148*Math.sin(M_*r)+.02*Math.sin(2*M_*r),L=(M_+C+180+102.9372)%360,Jt=n-lon/360+.0053*Math.sin(M_*r)-.0069*Math.sin(2*L*r),dec=Math.asin(Math.sin(L*r)*Math.sin(23.44*r)),w=Math.acos((Math.sin(-.833*r)-Math.sin(lat*r)*Math.sin(dec))/(Math.cos(lat*r)*Math.cos(dec)))/r,J0=Date.UTC(2000,0,1,12);return[J0+(Jt-w/360)*864e5,J0+(Jt+w/360)*864e5]}
+const WXK="avila-ruta-clima",tmo=()=>{const c=new AbortController();setTimeout(()=>c.abort(),12000);return c.signal};
+function wxCache(){try{return JSON.parse(localStorage.getItem(WXK)||"{}")}catch(e){return{}}}
+async function loadWx(k,force){const p=WXP.find(x=>x.k==k),c=wxCache();S.wx=S.wx||{};if(!S.wx[k]&&c[k])S.wx[k]=c[k];
+if(!force&&S.wx[k]&&Date.now()-S.wx[k].at<30*6e4)return;S.wxl=1;if(S.tab=="clima")render();
+let res=null,err="";for(const f of [omFetch,metFetch]){try{res=await f(p);break}catch(e){err=e.message}}
+S.wxl=0;if(res){res.at=Date.now();S.wx[k]=res;c[k]=res;try{localStorage.setItem(WXK,JSON.stringify(c))}catch(e){}S.wxe=""}else S.wxe=navigator.onLine===false?"Sin señal":"No se pudo actualizar";if(S.tab=="clima")render()}
+const lt=ts=>{const d=new Date(ts-4*36e5);return d.getUTCHours()+":"+String(d.getUTCMinutes()).padStart(2,"0")},lh=ts=>new Date(ts-4*36e5).getUTCHours();
+const DIAS=["dom","lun","mar","mié","jue","vie","sáb"];
+const WI={sun:`<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" fill="none"/>`,partly:`<circle cx="9" cy="8.5" r="3.4"/><path d="M9 2.5v1.5M3 8.5h1.5M4.8 4.3l1 1M13.2 4.3l-1 1" fill="none"/><path d="M8 19h9.5a3.5 3.5 0 0 0 .4-7A4.8 4.8 0 0 0 8.8 13 3 3 0 0 0 8 19z"/>`,cloud:`<path d="M7 18.5h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7 11.6a3.45 3.45 0 0 0 0 6.9z"/>`,fog:`<path d="M7 13.5h10a3.6 3.6 0 0 0 .5-7.2A5 5 0 0 0 7 7.2a3.2 3.2 0 0 0 0 6.3z"/><path d="M4 17h16M6 20.5h12" fill="none"/>`,rain:`<path d="M7 14.5h10a3.6 3.6 0 0 0 .5-7.2A5 5 0 0 0 7 8.2a3.2 3.2 0 0 0 0 6.3z"/><path d="M8.5 17.5l-1 2.5M12.5 17.5l-1 2.5M16.5 17.5l-1 2.5" fill="none"/>`,showers:`<path d="M7 14.5h10a3.6 3.6 0 0 0 .5-7.2A5 5 0 0 0 7 8.2a3.2 3.2 0 0 0 0 6.3z"/><path d="M9 17.5l-1 2.5M14 17.5l-1 2.5" fill="none"/>`,storm:`<path d="M7 13.5h10a3.6 3.6 0 0 0 .5-7.2A5 5 0 0 0 7 7.2a3.2 3.2 0 0 0 0 6.3z"/><path d="M12.5 14.5l-2 3.5h3l-2 3.5"/>`};
+const wic=(s,z=28)=>`<svg viewBox="0 0 24 24" width="${z}" height="${z}" style="flex:none;fill:var(--card);stroke:var(--ac);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round">${WI[s]||WI.cloud}</svg>`;
+const rainy=h=>h.sym=="rain"||h.sym=="showers"||h.sym=="storm"||h.p>=.3||(h.pp!=null&&h.pp>=50);
+// consejo para subir: mejor ventana entre 5:00 y 17:00 de hoy (o de mañana si ya es tarde) y a qué hora llega la lluvia
+function advice(W){const now=Date.now(),today=lh(now)<12,base=new Date(now-4*36e5);base.setUTCHours(0,0,0,0);const d0=+base+4*36e5+(today?0:864e5),H=W.hours.filter(h=>h.ts>=d0+5*36e5&&h.ts<=d0+17*36e5&&h.ts>=now-36e5);
+if(!H.length)return null;const bad=h=>(rainy(h)?3:0)+fogLv(h)+((h.wg??h.ws)>50?2:0);let best=null,cur=null;H.forEach(h=>{if(bad(h)<=1){cur=cur||{a:h.ts,b:h.ts};cur.b=h.ts;if(!best||cur.b-cur.a>best.b-best.a)best={...cur}}else cur=null});
+const rain=H.find(h=>rainy(h)),storm=H.find(h=>h.sym=="storm"),fog=H.find(h=>fogLv(h)==2);
+return{day:today?"hoy":"mañana",best,rain,storm,fog}}
+function climaV(){const k=S.wxk||"cima",p=WXP.find(x=>x.k==k);if(!S.wx||!S.wx[k]||Date.now()-S.wx[k].at>30*6e4)setTimeout(()=>loadWx(k),0);const W=S.wx&&S.wx[k];
+const sel=`<div class="row" style="flex-wrap:nowrap;overflow-x:auto;margin-bottom:12px">${WXP.map(x=>`<button class="btn s ${x.k==k?"":"o"}" style="flex:none" onclick="S.wxk='${x.k}';render()">${x.n} · ${nf(x.e)} m</button>`).join("")}</div>`;
+if(!W)return sel+`<div class="card"><p class="mu" style="margin:0">${S.wxe?S.wxe+". El clima en vivo necesita internet la primera vez; luego queda guardado para usarlo sin señal.":"Cargando el pronóstico…"}</p></div>`+trailNote();
+const n=W.now,f=fogLv(n),A=advice(W),age=Math.round((Date.now()-W.at)/6e4),H=W.hours.filter(h=>h.ts>=Date.now()-36e5).slice(0,24),nx=H.find(h=>rainy(h));
+return sel+`<div class="card"><div class="mu">${p.n} · ${nf(p.e)} m</div><div class="li" style="margin:4px 0"><div><div class="ttl" style="font-size:56px;line-height:1">${Math.round(n.t)}°</div><div style="font-weight:600">${WL[n.sym]}</div><div class="mu">${n.app!=null?"Sensación "+Math.round(n.app)+"° · ":""}Humedad ${Math.round(n.rh)} %</div></div>${wic(n.sym,64)}</div>
+<div class="k"><div><b>${FOGL[f]}</b>neblina</div><div><b>${Math.round(n.ws)}${n.wg!=null?"–"+Math.round(n.wg):""}</b>viento km/h</div><div><b>${nx?lt(nx.ts):"No"}</b>${nx?"lluvia desde":"lluvia en 24 h"}</div><div><b>${W.days[0]?lt(W.days[0].ss):"–"}</b>atardecer</div></div>
+<p class="mu" style="margin:0">${S.wxl?"Actualizando…":S.wxe?S.wxe+" · ":""}${!S.wxl?`Datos de ${W.src} · ${age<1?"recién actualizado":"hace "+(age<90?age+" min":Math.round(age/60)+" h")}`:""} · <a href="#" onclick="loadWx('${k}',1);return false" style="color:var(--tx)">Actualizar</a></p></div>
+${A?`<div class="card warn"><b class="ttl" style="font-size:19px">Para subir ${A.day}</b>${A.storm?`<p style="margin:6px 0 0;color:var(--warn);font-weight:600">⚠ Tormenta eléctrica prevista a las ${lt(A.storm.ts)}: evita las cumbres y las zonas abiertas.</p>`:""}<p style="margin:6px 0 0">${A.best&&A.best.b>A.best.a?`Mejor ventana: <b>${lt(A.best.a)} a ${lt(A.best.b+36e5)}</b>.`:"No hay una ventana clara sin lluvia ni neblina densa."} ${A.rain?`Lluvia probable desde las <b>${lt(A.rain.ts)}</b>: planifica bajar antes.`:"Sin lluvia prevista entre 5:00 y 17:00."}${A.fog?` Neblina densa desde las ${lt(A.fog.ts)}.`:""}</p></div>`:""}
+<h3>Próximas horas</h3><div class="card" style="display:flex;gap:4px;overflow-x:auto;padding:12px 8px">${H.map(h=>`<div style="flex:none;width:56px;text-align:center;font-size:12px"><div class="mu">${lh(h.ts)}:00</div><div style="display:flex;justify-content:center;margin:4px 0">${wic(h.sym,26)}</div><b class="ttl" style="font-size:18px">${Math.round(h.t)}°</b><div style="color:${rainy(h)?"var(--tx)":"var(--mu)"};font-weight:${rainy(h)?700:400}">${h.pp!=null?h.pp+" %":h.p>=.1?nf(h.p,1)+" mm":"—"}</div><div class="mu" style="font-size:10px">${["","niebla","niebla+"][fogLv(h)]||"&nbsp;"}</div></div>`).join("")}</div>
+<p class="mu" style="margin:-4px 2px 0">${H.some(h=>h.pp!=null)?"% = probabilidad de lluvia.":"mm = lluvia prevista por hora."} “niebla” = neblina media, “niebla+” = densa.</p>
+<h3>Próximos días</h3><div class="card">${W.days.map(d=>{const x=new Date(d.ts-4*36e5);return `<div class="pl" style="align-items:center"><span class="d">${lh(Date.now())>=0&&W.days.indexOf(d)==0?"Hoy":DIAS[x.getUTCDay()]+" "+x.getUTCDate()}</span>${wic(d.sym,26)}<div>${WL[d.sym]}<div class="mu">${d.pp!=null?"Lluvia "+d.pp+" % · ":""}${d.ps>=.1?nf(d.ps,1)+" mm · ":""}sol ${lt(d.sr)}–${lt(d.ss)}</div></div><b class="ttl" style="font-size:18px;white-space:nowrap">${Math.round(d.tmin)}° / ${Math.round(d.tmax)}°</b></div>`}).join("")}</div>${trailNote()}`}
+const trailNote=()=>`<div class="card warn" style="margin-top:10px">El estado de los senderos lo publica Inparques. Tras los sismos del 24 de junio se restringió la mayoría de los accesos: confirma antes de salir.</div><p class="mu">Pronóstico de modelos globales corregido por la altura de cada punto. En montaña el tiempo cambia rápido: revisa el cielo y no subas con tormenta.</p>`;
+
+// ---------- Importar actividades del reloj (Garmin, Coros, Suunto, Polar, etc.): .fit, .gpx, .tcx o .zip ----------
+// Lector de archivos FIT (formato original de los relojes Garmin): solo los puntos del recorrido (mensaje "record")
+function parseFIT(buf){const v=new DataView(buf),hs=v.getUint8(0),end=hs+v.getUint32(4,true);if(String.fromCharCode(...new Uint8Array(buf,8,4))!=".FIT")throw new Error("FIT inválido");
+const defs={},pts=[];let p=hs,last=0,timer=0;
+const rd=(f,o,le)=>{const s=f.size,bt=f.type&0x1f;if(s==1)return bt==1?v.getInt8(o):v.getUint8(o);if(s==2)return bt==3?v.getInt16(o,le):v.getUint16(o,le);if(s==4)return bt==5?v.getInt32(o,le):v.getUint32(o,le);return null};
+while(p<end){const h=v.getUint8(p++);
+ if(h&0x80){const lt=(h>>5)&3,off=h&0x1f,d=defs[lt];let ts=(last&~0x1f)+off;if(off<(last&0x1f))ts+=0x20;last=ts;if(!d)break;p=rec(d,p,ts);continue}
+ const lt=h&0x0f;if(h&0x40){const le=v.getUint8(p+1)==0,g=v.getUint16(p+2,le),n=v.getUint8(p+4);let q=p+5;const fs=[];for(let i=0;i<n;i++){fs.push({num:v.getUint8(q),size:v.getUint8(q+1),type:v.getUint8(q+2)});q+=3}
+  let dev=0;if(h&0x20){const nd=v.getUint8(q++);for(let i=0;i<nd;i++){dev+=v.getUint8(q+1);q+=3}}defs[lt]={g,le,fs,dev};p=q}
+ else{const d=defs[lt];if(!d)break;p=rec(d,p,null)}}
+function rec(d,q,cts){const o={};for(const f of d.fs){o[f.num]=rd(f,q,d.le);q+=f.size}q+=d.dev;
+ if(d.g==20){let ts=o[253]!=null&&o[253]!=0xffffffff?o[253]:cts;if(o[253]!=null&&o[253]!=0xffffffff)last=o[253];
+  const la=o[0],lo=o[1];if(la!=null&&lo!=null&&la!=0x7fffffff&&lo!=0x7fffffff){const ea=o[78]!=null&&o[78]!=0xffffffff?o[78]/5-500:o[2]!=null&&o[2]!=0xffff?o[2]/5-500:null;
+   pts.push({lat:la*180/2**31,lon:lo*180/2**31,e:ea,t:ts!=null?(ts+631065600)*1000:null,hr:o[3]!=null&&o[3]!=0xff&&o[3]>0?o[3]:null})}}
+ else if(d.g==18&&o[8]!=null&&o[8]!=0xffffffff)timer=o[8]/1000;else if(o[253]!=null&&o[253]!=0xffffffff)last=o[253];return q}
+return{pts,timer}}
+function parseXML(txt){const x=new DOMParser().parseFromString(txt,"application/xml"),q=(e,n)=>e.getElementsByTagNameNS("*",n)[0],out=[];
+let L=[...x.getElementsByTagNameNS("*","trkpt")];if(!L.length)L=[...x.getElementsByTagNameNS("*","rtept")];
+if(L.length)L.forEach(e=>{const el=q(e,"ele"),t=q(e,"time");const hr=q(e,"hr");out.push({lat:+e.getAttribute("lat"),lon:+e.getAttribute("lon"),e:el?+el.textContent:null,t:t?Date.parse(t.textContent):null,hr:hr?+hr.textContent:null})});
+else[...x.getElementsByTagNameNS("*","Trackpoint")].forEach(e=>{const la=q(e,"LatitudeDegrees"),lo=q(e,"LongitudeDegrees");if(!la||!lo)return;const el=q(e,"AltitudeMeters"),t=q(e,"Time"),hb=q(e,"HeartRateBpm"),hv=hb&&q(hb,"Value");out.push({lat:+la.textContent,lon:+lo.textContent,e:el?+el.textContent:null,t:t?Date.parse(t.textContent):null,hr:hv?+hv.textContent:null})});
+return{pts:out.filter(p=>isFinite(p.lat)&&isFinite(p.lon)),timer:0}}
+// Garmin Connect "Exportar original" descarga un .zip con el .fit adentro
+async function unzip(buf){const v=new DataView(buf);let e=buf.byteLength-22;while(e>=0&&v.getUint32(e,true)!=0x06054b50)e--;if(e<0)throw new Error("ZIP inválido");
+let p=v.getUint32(e+16,true);const n=v.getUint16(e+10,true);
+for(let i=0;i<n;i++){const meth=v.getUint16(p+10,true),cs=v.getUint32(p+20,true),nl=v.getUint16(p+28,true),xl=v.getUint16(p+30,true),cl=v.getUint16(p+32,true),off=v.getUint32(p+42,true),name=new TextDecoder().decode(new Uint8Array(buf,p+46,nl));p+=46+nl+xl+cl;
+ if(!/\.(fit|gpx|tcx)$/i.test(name))continue;const lo=off+30+v.getUint16(off+26,true)+v.getUint16(off+28,true),raw=buf.slice(lo,lo+cs);
+ const data=meth==0?raw:await new Response(new Blob([raw]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer();return{name,data}}
+throw new Error("El .zip no trae ninguna actividad (.fit, .gpx o .tcx)")}
+// Convierte los puntos del reloj en una actividad sobre el mapa del Ávila
+function toTrack(pts){const g=[];let t0=pts.find(p=>p.t)?.t||null;
+for(const p of pts){const x=(p.lon-M.O[0])*M.CX,y=(p.lat-M.O[1])*M.CY,t=p.t&&t0?Math.round((p.t-t0)/1000):null,l=g.at(-1);if(l&&Math.hypot(x-l[0],y-l[1])<8)continue;g.push([Math.round(x),Math.round(y),p.e==null?null:Math.round(p.e),t].concat(p.hr?[p.hr]:[]))}
+return{g,t0}}
+function trackRoute(g,n){const G=g.map(p=>[p[0],p[1],p[2]??0]),C=[0];for(let i=1;i<G.length;i++)C.push(C[i-1]+Math.hypot(G[i][0]-G[i-1][0],G[i][1]-G[i-1][1]));
+// suavizado de altura y subida/bajada con umbral (igual que en las rutas)
+const E=G.map((_,i)=>{const w=G.slice(Math.max(0,i-2),i+3);return w.reduce((a,p)=>a+p[2],0)/w.length});let up=0,dn=0,ref=E[0];for(const e of E){if(e-ref>4){up+=e-ref;ref=e}else if(ref-e>4){dn+=ref-e;ref=e}}
+const hasE=g.some(p=>p[2]!=null);
+// rejilla para buscar puntos cercanos rápido
+const cell=40,grid={};G.forEach((p,i)=>{const k=Math.floor(p[0]/cell)+","+Math.floor(p[1]/cell);(grid[k]=grid[k]||[]).push(i)});
+const near=(x,y,r)=>{let b=null,bd=r;const cx=Math.floor(x/cell),cy=Math.floor(y/cell),R=Math.ceil(r/cell);for(let i=-R;i<=R;i++)for(let j=-R;j<=R;j++)for(const k of grid[(cx+i)+","+(cy+j)]||[]){const d=Math.hypot(G[k][0]-x,G[k][1]-y);if(d<=bd&&(b==null||k<b)){bd=d;b=k}}return b};
+const pass=[];for(const p of P){const i=near(p.x,p.y,p.ent?90:60);if(i!=null)pass.push({p,s:C[i],i,tt:g[i][3]})}pass.sort((a,b)=>a.i-b.i);
+// tramos de sendero recorridos (para pintarlos en el mapa como "ya caminado")
+const steps=[];M.E.forEach((e,ei)=>{const ok=e.g.filter(q=>near(q[0],q[1],30)!=null).length;if(ok>=Math.max(2,e.g.length*.6))steps.push({e:ei})});
+const L=C.at(-1),ent=ENTS.map(e=>({e,d:Math.hypot(e.x-G[0][0],e.y-G[0][1])})).sort((a,b)=>a.d-b.d)[0],dests=pass.filter(x=>!x.p.ent&&x.p.t!="post"),top=dests.length?dests.reduce((a,b)=>b.p.e>a.p.e?b:a).p:null;
+const start=ent&&ent.d<700?ent.e:pass[0]?.p,rt=Math.hypot(G.at(-1)[0]-G[0][0],G.at(-1)[1]-G[0][1])<300;
+const r={imp:1,G,C,L,km:L/1000,up:hasE?Math.round(up):0,dn:hasE?Math.round(dn):0,hasE,pass,steps,junc:[],nodes:[],rt,ck:"imp",stops:start?[start.id].concat(top?[top.id]:[]):[],
+ n:n||(top?top.n+(start&&start.id!=top.id?" desde "+start.n:""):"Caminata en el Ávila")};
+r.t=L/1000*15+r.up/8+r.dn/25;r.d=r.up>1500||r.km>15?3:r.up>900?2:r.up>350?1:0;r.id="imp"+g.length+"-"+Math.round(L);return r}
+const step=async t=>{S.imsg=t;render();await new Promise(r=>setTimeout(r,60))};
+async function importFile(f){S.imsg="";S.tx=1;await step("Recibiendo la actividad…");
+try{let name=f.name,buf=await f.arrayBuffer();if(/\.zip$/i.test(name)){const z=await unzip(buf);name=z.name;buf=z.data}
+ await step("Leyendo el recorrido GPS…");const raw=/\.fit$/i.test(name)?parseFIT(buf):parseXML(new TextDecoder().decode(buf));if(raw.pts.length<5)throw new Error("El archivo no trae un recorrido GPS");
+ await step("Reconociendo los senderos del Ávila…");const{g,t0}=toTrack(raw.pts),r=trackRoute(g);
+ if(!r.pass.length&&r.steps.length<2)throw new Error("Esta actividad no pasa por los senderos del Ávila que tenemos en el mapa");
+ const ts=t0||Date.now();if(S.done.some(d=>d.imp&&Math.abs(d.ts-ts)<6e4))throw new Error("Ya habías importado esta actividad");
+ const tt=g.at(-1)[3],mv=raw.timer||(()=>{let s=0;for(let i=1;i<g.length;i++){const dt=g[i][3]-g[i-1][3],dd=Math.hypot(g[i][0]-g[i-1][0],g[i][1]-g[i-1][1]);if(dt>0&&dt<180&&dd/dt>.25)s+=dt}return s})();
+ const d0=new Date(ts),d={r,ts,f:fdate(ts),h:d0.getHours()+":"+String(d0.getMinutes()).padStart(2,"0"),m:Math.max(1,Math.round((mv||tt||r.t*60)/60)),imp:{g,n:r.n},el:tt?Math.round(tt/60):null};
+ r.t=d.m;S.done.push(d);save();S.imsg="";S.watch=0;S.tab="perfil";S.act=S.done.indexOf(d);S.tx=0;S.msg="✓ Datos transferidos: "+r.pass.length+" lugares reconocidos"+(r.hasE?"":" (el archivo no trae altura)");render();$("main").scrollTop=0}
+catch(e){S.tx=0;S.imsg="No se pudo transferir: "+(e.message||"archivo no reconocido");render()}}
+// marcas de relojes y dispositivos con GPS (la conexión automática llega cuando la app esté publicada)
+const DEV=[["Relojes deportivos",[["Garmin","Forerunner, Fenix, Epix, Instinct, Enduro · Garmin Connect"],["Coros","Pace, Apex, Vertix · app Coros"],["Suunto","Race, Vertical, 9 Peak · app Suunto"],["Polar","Grit X, Vantage, Pacer · Polar Flow"],["Wahoo","Elemnt Rival · app Wahoo"]]],
+["Relojes inteligentes",[["Apple Watch","A través de Apple Salud"],["Samsung Galaxy Watch","A través de Samsung Health"],["Google Pixel Watch y Fitbit","A través de Fitbit y Health Connect"],["Huawei Watch","A través de Huawei Salud"],["Amazfit","T-Rex, Cheetah, Balance · app Zepp"],["Xiaomi","Watch y Smart Band · Mi Fitness"],["Relojes con Wear OS","TicWatch, OnePlus, Fossil · Health Connect"]]],
+["Teléfono",[["Tu teléfono","Graba con el GPS del teléfono desde “Empezar ruta”"]]]];
+function wantDev(n){S.want=n;try{localStorage.setItem("avila-ruta-reloj",n)}catch(e){}render()}
+try{S.want=localStorage.getItem("avila-ruta-reloj")}catch(e){}
+const pickFile=()=>{const i=document.createElement("input");i.type="file";i.accept=".fit,.gpx,.tcx,.zip,application/gpx+xml,application/zip,application/octet-stream";i.style.display="none";document.body.appendChild(i);i.onchange=()=>{i.files[0]&&importFile(i.files[0]);i.remove()};i.click()};
+const AND=/android/i.test(navigator.userAgent);
+function watchV(){const n=S.done.filter(d=>d.imp).length,last=[...S.done].filter(d=>d.imp).sort((a,b)=>b.ts-a.ts)[0],W=DEV.flatMap(x=>x[1]).filter(x=>x[0]!="Tu teléfono");
+return `<div class="sh" onclick="S.tx||(S.watch=0,render())"><div class="card" onclick="event.stopPropagation()"><div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div><b class="ttl" style="font-size:26px">${S.want?esc(S.want):"Tu reloj"}</b><div class="mu">${n?n+(n==1?" actividad transferida":" actividades transferidas")+(last?" · última: "+fdate(last.ts):""):"Pasa tus caminatas del reloj a Ávila Ruta"}</div></div><button class="chip" onclick="S.watch=0;render()">✕</button></div>
+<button class="btn" style="width:100%;margin:16px 0 6px;padding:16px;font-size:18px;display:flex;align-items:center;justify-content:center;gap:10px" onclick="pickFile()" ${S.tx?"disabled":""}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#0a0a0a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 9M20 4v5h-5M20 12a8 8 0 0 1-13.7 5.6L4 15M4 20v-5h5"/></svg>${S.tx?"Transfiriendo…":"Transferir datos"}</button>
+${S.imsg?`<p class="${S.imsg.startsWith("No se")?"err":"mu"}" style="margin:4px 0 0;text-align:center">${esc(S.imsg)}</p>`:`<p class="mu" style="margin:4px 0 0;text-align:center">Elige la actividad guardada en el teléfono${AND?" o compártela desde la app de tu reloj a Ávila Ruta":""}. Verás tu rendimiento y el recorrido recreado en el mapa.</p>`}
+<details style="margin-top:14px"><summary class="mu" style="cursor:pointer">¿De dónde saco la actividad?</summary><ol class="mu" style="padding-left:18px;margin:8px 0 0;line-height:1.6"><li><b>Garmin:</b> en connect.garmin.com (sirve desde el navegador del teléfono) abre la actividad → engranaje ⚙ → <b>Exportar original</b> o <b>Exportar a GPX</b>.</li><li><b>Otras marcas:</b> en la app del reloj busca <b>Exportar</b> o <b>Compartir</b> la actividad como .fit, .gpx o .tcx.</li><li>Vuelve aquí y toca <b>Transferir datos</b>.</li></ol></details>
+<h3>Marca de tu reloj</h3><div style="display:flex;flex-wrap:wrap;gap:6px">${W.map(([m])=>`<button class="chip ${S.want==m?"g":""}" onclick="wantDev('${m}')">${S.want==m?"✓ ":""}${m}</button>`).join("")}</div>
+<p class="mu" style="margin:12px 0 0">Muy pronto: transferencia directa desde el reloj, sin elegir archivos. Necesita la conexión oficial con cada marca y estamos trabajando en ella.</p></div></div>`}
+function impV(){return `<div class="card"><b>Transferir datos del reloj</b><p class="mu" style="margin:4px 0 10px">Pasa tus caminatas del reloj: verás tu rendimiento y el recorrido recreado en el mapa.</p><button class="btn" style="width:100%" onclick="S.watch=1;render();pickFile()">Transferir datos</button></div>`}
+// ---------- Actividad tipo Strava ----------
+const me=()=>{const h=S.done;return{n:S.u,h,sub:h.length,km:h.reduce((a,d)=>a+d.r.km,0),up:h.reduce((a,d)=>a+d.r.up,0),t:h.reduce((a,d)=>a+d.m,0)}};
+const vis=()=>{const s=new Set();S.done.forEach(d=>d.r.pass.forEach(x=>s.add(x.p.id)));return[...s].map(i=>P[i])};
+const ini=n=>n.split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+// ---------- Perfil: nivel, estadísticas por mes, récords, retos y medallas ----------
+const asc=()=>[...S.done].sort((a,b)=>a.ts-b.ts);
+const placesIn=h=>{const s=new Set();h.forEach(d=>d.r.pass.forEach(x=>s.add(x.p.id)));return[...s].map(i=>P[i])};
+const sumK=(h,k)=>h.reduce((a,d)=>a+(k=="m"?d.m:d.r[k]),0);
+const wk=ts=>Math.floor((ts/864e5+3)/7);
+function streak(h){const w=[...new Set(h.map(d=>wk(d.ts)))].sort((a,b)=>a-b);let b=0,c=0;w.forEach((x,i)=>{c=i&&x==w[i-1]+1?c+1:1;b=Math.max(b,c)});return b}
+const hr=d=>{const[a,b]=d.h.split(":").map(Number);return a*60+b};
+const has=n=>h=>placesIn(h).some(p=>p.n==n)?1:0;
+// retos permanentes: ic = ícono de la medalla
+const RT=[
+{c:"Picos",ic:"peak",n:"Tu primer pico",d:"Llega a cualquier pico o topo",f:h=>placesIn(h).filter(p=>p.t=="peak").length,t:1},
+{c:"Picos",ic:"peak",n:"Silla de Caracas",d:"Llega al collado entre los dos picos",f:has("Silla de Caracas (collado)"),t:1},
+{c:"Picos",ic:"peak",n:"Pico Occidental",d:"2.470 m",f:has("Pico Occidental"),t:1},
+{c:"Picos",ic:"peak",n:"Pico Oriental",d:"2.625 m",f:has("Pico Oriental"),t:1},
+{c:"Picos",ic:"crown",n:"Techo de Caracas",d:"Llega al Pico Naiguatá, 2.765 m",f:has("Pico Naiguatá"),t:1},
+{c:"Picos",ic:"crown",n:"Los 3 grandes",d:"Occidental, Oriental y Naiguatá",f:h=>placesIn(h).filter(p=>/^Pico (Occidental|Oriental|Naiguatá)$/.test(p.n)).length,t:3},
+{c:"Picos",ic:"peak",n:"Coleccionista de topos",d:"8 picos o topos distintos",f:h=>placesIn(h).filter(p=>p.t=="peak").length,t:8},
+{c:"Lugares",ic:"drop",n:"Cazador de cascadas",d:"Conoce 2 cascadas",f:h=>placesIn(h).filter(p=>p.t=="fall").length,t:2},
+{c:"Lugares",ic:"eye",n:"Miradores",d:"Visita 4 miradores distintos",f:h=>placesIn(h).filter(p=>p.t=="view").length,t:4},
+{c:"Lugares",ic:"pin",n:"Explorador",d:"Visita 15 lugares del Ávila",f:h=>placesIn(h).length,t:15},
+{c:"Lugares",ic:"door",n:"Todas las puertas",d:"Entra por 5 entradas distintas",f:h=>new Set(h.map(d=>d.r.stops[0])).size,t:5},
+{c:"Subida",ic:"up",n:"1.000 m de subida",d:"Acumulados",f:h=>sumK(h,"up"),t:1000,u:" m"},
+{c:"Subida",ic:"up",n:"5.000 m de subida",d:"Acumulados",f:h=>sumK(h,"up"),t:5000,u:" m"},
+{c:"Subida",ic:"crown",n:"Un Everest",d:"8.849 m de subida acumulada",f:h=>sumK(h,"up"),t:8849,u:" m"},
+{c:"Subida",ic:"bolt",n:"Día grande",d:"1.500 m de subida en una sola salida",f:h=>Math.max(0,...h.map(d=>d.r.up)),t:1500,u:" m"},
+{c:"Distancia",ic:"boot",n:"25 km",d:"Recorridos en el Ávila",f:h=>sumK(h,"km"),t:25,u:" km"},
+{c:"Distancia",ic:"boot",n:"100 km",d:"Recorridos en el Ávila",f:h=>sumK(h,"km"),t:100,u:" km"},
+{c:"Distancia",ic:"route",n:"Travesía",d:"Una salida de 15 km o más",f:h=>Math.max(0,...h.map(d=>d.r.km)),t:15,u:" km"},
+{c:"Constancia",ic:"cal",n:"5 subidas",d:"Completa 5 salidas",f:h=>h.length,t:5},
+{c:"Constancia",ic:"cal",n:"20 subidas",d:"Completa 20 salidas",f:h=>h.length,t:20},
+{c:"Constancia",ic:"flame",n:"Racha de 4 semanas",d:"Al menos una salida por semana, 4 semanas seguidas",f:streak,t:4},
+{c:"Constancia",ic:"sun",n:"Madrugador",d:"Sal antes de las 6:00 a. m.",f:h=>h.some(d=>hr(d)<360)?1:0,t:1}];
+const ICO={peak:`<path d="M5 18l7-12 7 12z"/>`,crown:`<path d="M5 17l-1-9 5 4 3-6 3 6 5-4-1 9z"/>`,drop:`<path d="M12 4c4 5 6 8 6 10.5a6 6 0 0 1-12 0C6 12 8 9 12 4z"/>`,eye:`<path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/>`,pin:`<path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/>`,door:`<path d="M6 20V5h12v15M4 20h16"/><circle cx="14.5" cy="13" r=".9"/>`,up:`<path d="M12 19V5M6 11l6-6 6 6"/>`,bolt:`<path d="M13 3L5 13h6l-1 8 8-10h-6z"/>`,boot:`<path d="M7 4h5v8l6 3c1.5.7 2 1.6 2 3v1H4V4z"/>`,route:`<circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h7a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h7"/>`,cal:`<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>`,flame:`<path d="M12 3c1 4 5 5.5 5 10.5a5 5 0 0 1-10 0c0-2.6 1.4-4 2.5-5 .3 2 1.2 3 2.5 3.5C11 9 12 6 12 3z"/>`,sun:`<circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>`};
+// evalúa cada reto y la fecha en que se ganó (la salida con la que se cumplió)
+function evalRT(){const h=asc();return RT.map(x=>{const v=x.f(h);let at=null;if(v>=x.t){for(let k=1;k<=h.length;k++)if(x.f(h.slice(0,k))>=x.t){at=h[k-1].ts;break}}return{...x,v,p:Math.min(1,v/x.t),at}})}
+const LV=[[0,"Caminante"],[300,"Excursionista"],[1000,"Montañista"],[2500,"Cumbrero"],[5000,"Guardián del Ávila"],[10000,"Leyenda del Waraira"]];
+function level(L){const xp=Math.round(sumK(S.done,"up")/10+sumK(S.done,"km")*5+L.filter(x=>x.at).length*50);let i=0;while(i<LV.length-1&&xp>=LV[i+1][0])i++;return{xp,i,n:LV[i][1],nx:LV[i+1]}}
+function months(n=6){const o=[],d=new Date();for(let i=n-1;i>=0;i--){const x=new Date(d.getFullYear(),d.getMonth()-i,1),y=new Date(d.getFullYear(),d.getMonth()-i+1,1),h=S.done.filter(a=>a.ts>=+x&&a.ts<+y);o.push({m:x.getMonth(),y:x.getFullYear(),h,km:sumK(h,"km"),up:sumK(h,"up"),n:h.length})}return o}
+const MET={km:["Distancia",v=>nf(v,1)+" km"],up:["Subida",v=>nf(v)+" m"],n:["Salidas",v=>v+(v==1?" salida":" salidas")]};
+function chartV(){const ms=months(),k=S.pm||"km",mx=Math.max(1,...ms.map(x=>x[k])),sel=S.pmi??Math.max(0,ms.map(x=>x.n>0).lastIndexOf(true)),W=320,H=120,bw=W/ms.length;
+return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>Por mes</b><div class="seg" style="margin:0;flex:none">${Object.entries(MET).map(([key,[lab]])=>`<button class="${k==key?"on":""}" style="padding:5px 9px;font-size:12px" onclick="S.pm='${key}';render()">${lab}</button>`).join("")}</div></div>
+<div style="margin:10px 0 2px;font-size:13px"><b>${MESL[ms[sel].m]}:</b> ${MET[k][1](ms[sel][k])}${k!="n"?` <span class="mu">· ${ms[sel].n} ${ms[sel].n==1?"salida":"salidas"}</span>`:""}</div>
+<svg viewBox="0 0 ${W} ${H+18}" style="width:100%;display:block" role="img" aria-label="${MET[k][0]} por mes, últimos 6 meses">${ms.map((x,i)=>{const h=x[k]?Math.max(4,x[k]/mx*(H-8)):0,X=i*bw+bw*.22,w=bw*.56;return `<g onclick="S.pmi=${i};render()" style="cursor:pointer"><rect x="${i*bw}" y="0" width="${bw}" height="${H+18}" fill="transparent"/>${h?`<path d="M${X},${H}V${H-h+4}a4,4 0 0 1 4,-4h${w-8}a4,4 0 0 1 4,4V${H}Z" fill="var(--ac)" opacity="${i==sel?1:.45}"/>`:""}<text x="${i*bw+bw/2}" y="${H+14}" font-size="10" text-anchor="middle" fill="${i==sel?"var(--tx)":"var(--mu)"}" font-weight="${i==sel?700:400}">${MES[x.m]}</text></g>`}).join("")}<path d="M0,${H}H${W}" stroke="var(--bd)"/></svg>
+<p class="mu" style="margin:6px 0 0">Toca un mes para ver su total.</p></div>`}
+function cmpV(){const ms=months(2),[a,b]=ms,row=(lab,k,fmt)=>{const d=b[k]-a[k];return `<div><b>${fmt(b[k])}</b>${lab}<div style="font-size:11px;color:var(--mu)">${d==0?"igual que "+MES[a.m]:(d>0?"▲ ":"▼ ")+fmt(Math.abs(d))+" vs "+MES[a.m]}</div></div>`};
+return `<div class="card"><b>${MESL[b.m]} hasta hoy</b><div class="k k3">${row("salidas","n",v=>v)}${row("distancia","km",v=>nf(v,1)+" km")}${row("subida","up",v=>nf(v)+" m")}</div></div>`}
+function recV(){const h=S.done;if(!h.length)return"";const by=f=>h.reduce((a,b)=>f(b)>f(a)?b:a),L=by(d=>d.r.km),U=by(d=>d.r.up),E=h.reduce((a,b)=>hr(b)<hr(a)?b:a);
+const it=(t,v,d)=>`<div class="pl" style="cursor:pointer" onclick="S.act=${S.done.indexOf(d)};render()"><span class="d" style="width:auto;min-width:96px">${t}</span><div><b>${v}</b><div class="mu">${esc(d.r.n)} · ${fdate(d.ts)}</div></div></div>`;
+return `<h3>Récords personales</h3><div class="card">${it("Más larga",nf(L.r.km,1)+" km",L)}${it("Más subida",nf(U.r.up)+" m",U)}${it("Más temprano",E.h,E)}<div class="pl"><span class="d" style="width:auto;min-width:96px">Mejor racha</span><div><b>${streak(h)} ${streak(h)==1?"semana":"semanas"}</b><div class="mu">con al menos una salida por semana</div></div></div></div>`}
+const KEYP=["Pico Occidental","Pico Oriental","Pico Naiguatá","Silla de Caracas (collado)","Teleférico (Hotel Humboldt)","Lagunazo","Los Venados","El Banquito","Piedra del Indio","Cascada Quebrada Quintero","Cueva de Los Palmeros","Topo Goering"];
+function lugV(){const v=new Set(placesIn(S.done).map(p=>p.n));const n=KEYP.filter(x=>v.has(x)).length;
+return `<div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Lugares clave del Ávila</h3><span class="mu">${n} de ${KEYP.length}</span></div><div class="card" style="display:flex;flex-wrap:wrap;gap:6px">${KEYP.map(x=>{const ok=v.has(x),p=P.find(q=>q.n==x);return `<button class="chip ${ok?"g":""}" onclick="S.tab='map';S.route=null;S.selP=${p.id};S.v={cx:${p.x},cy:${p.y},w:3000};render()">${ok?"✓ ":""}${esc(x.replace(" (collado)","").replace("Teleférico (Hotel Humboldt)","Hotel Humboldt"))}</button>`}).join("")}</div>`}
+function medal(x,sz=58){const on=!!x.at;return `<svg width="${sz}" height="${sz}" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="29" fill="${on?"#0a0a0a":"var(--soft)"}" stroke="${on?"#FFD400":"var(--bd)"}" stroke-width="3" ${on?"":'stroke-dasharray="4 4"'}/><g transform="translate(14,14) scale(1.5)" fill="none" stroke="${on?"#FFD400":"var(--mu)"}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">${ICO[x.ic]}</g></svg>`}
+function retosMes(){const d=new Date(),m=months(1)[0],left=new Date(d.getFullYear(),d.getMonth()+1,0).getDate()-d.getDate(),R=[["Haz 4 salidas","n",4,v=>v],["Sube 2.000 m","up",2000,v=>nf(v)+" m"],["Recorre 30 km","km",30,v=>nf(v,1)+" km"]];
+return `<div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Retos de ${MESL[m.m].toLowerCase()}</h3><span class="mu">${left==0?"último día":"quedan "+left+" días"}</span></div>${R.map(([n,k,t,f])=>{const p=Math.min(1,m[k]/t);return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><b>${n}</b><span class="mu">${f(Math.min(m[k],t))} de ${f(t)}${p>=1?" ✓":""}</span></div><div class="bar"><i style="width:${p*100}%"></i></div></div>`}).join("")}`}
+function retosV(L){const cats=["Todos",...new Set(RT.map(x=>x.c))],vs=L.filter(x=>S.cat=="Todos"||x.c==S.cat).sort((a,b)=>(a.p>=1)-(b.p>=1)||b.p-a.p);
+return retosMes()+`<div style="display:flex;justify-content:space-between;align-items:baseline"><h3>Retos permanentes</h3><span class="mu">${L.filter(x=>x.at).length} de ${L.length}</span></div><div class="row" style="flex-wrap:nowrap;overflow-x:auto;margin-bottom:10px">${cats.map(c=>`<button class="btn s ${S.cat==c?"":"o"}" style="flex:none" onclick="S.cat='${c}';render()">${c}</button>`).join("")}</div>${vs.map(x=>`<div class="card li">${medal(x,44)}<div><div style="display:flex;justify-content:space-between;gap:8px"><b>${x.n}</b><span class="mu" style="white-space:nowrap">${x.at?"✓ "+fdate(x.at):nf(Math.round(Math.min(x.v,x.t)*10)/10,x.u==" km"?1:0)+"/"+nf(x.t)+(x.u||"")}</span></div><div class="mu">${x.d}</div>${x.at?"":`<div class="bar"><i style="width:${x.p*100}%"></i></div>`}</div></div>`).join("")}`}
+function medV(L){const on=L.filter(x=>x.at).sort((a,b)=>b.at-a.at),off=L.filter(x=>!x.at).sort((a,b)=>b.p-a.p);const cell=x=>`<div style="text-align:center;padding:6px 2px">${medal(x)}<div style="font-size:12px;font-weight:600;margin-top:4px;line-height:1.25">${x.n}</div><div class="mu" style="font-size:11px">${x.at?fdate(x.at):Math.round(x.p*100)+" %"}</div></div>`;
+return `<h3>Ganadas · ${on.length}</h3>${on.length?`<div class="card" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">${on.map(cell).join("")}</div>`:`<p class="mu">Completa un reto para ganar tu primera medalla.</p>`}<h3>Por ganar · ${off.length}</h3><div class="card" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">${off.map(cell).join("")}</div>`}
+function histV(){const h=[...S.done].sort((a,b)=>b.ts-a.ts);let cur="",o=impV();
+if(S.done.some(d=>d.demo))o+=`<div class="card warn" style="display:flex;justify-content:space-between;align-items:center;gap:10px"><span>Incluye salidas de ejemplo para que veas cómo se ve tu perfil.</span><button class="btn s o" style="flex:none" onclick="S.done=S.done.filter(d=>!d.demo);save();render()">Borrar ejemplos</button></div>`;
+h.forEach(d=>{const x=new Date(d.ts),k=MESL[x.getMonth()]+" "+x.getFullYear();if(k!=cur){cur=k;o+=`<h3>${k}</h3>`}o+=`<div class="card li" style="cursor:pointer" onclick="S.act=${S.done.indexOf(d)};render()"><div>${esc(d.r.n)}<br><span class="mu">${d.imp?"⌚ ":""}${fdate(d.ts)} · ${nf(d.r.km,1)} km · +${nf(d.r.up)} m</span></div><b>${fm(d.m)}</b><span class="mu">›</span></div>`});
+return o+(h.length?"":`<p class="mu">Aún no has completado rutas. Elige una en Rutas y pulsa “Empezar ruta”, o importa una actividad de tu reloj.</p>`)}
+function perfilV(){const L=evalRT(),lv=level(L),M_=me(),pt=S.pt||"resumen",pl=placesIn(S.done);
+const head=`<div class="card"><div class="li"><span class="av" style="width:48px;height:48px;font-size:16px">${ini(S.u)}</span><div><b class="ttl" style="font-size:21px">${esc(S.u)}</b><div class="mu">${lv.n} · ${FR.filter(f=>f.f).length} amigos</div></div></div>${lv.nx?`<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:12px"><span><b>${nf(lv.xp)} XP</b></span><span class="mu">${nf(lv.nx[0]-lv.xp)} XP para ${lv.nx[1]}</span></div><div class="bar"><i style="width:${(lv.xp-LV[lv.i][0])/(lv.nx[0]-LV[lv.i][0])*100}%"></i></div>`:`<p class="mu">${nf(lv.xp)} XP · nivel máximo</p>`}<p class="mu" style="margin:4px 0 0">Ganas XP por cada metro que subes, cada km y cada medalla.</p></div>`;
+const seg=`<div class="seg">${[["resumen","Resumen"],["retos","Retos"],["medallas","Medallas"],["historial","Historial"]].map(([k,n])=>`<button class="${pt==k?"on":""}" onclick="S.pt='${k}';render()">${n}</button>`).join("")}</div>`;
+let body;if(pt=="retos")body=retosV(L);else if(pt=="medallas")body=medV(L);else if(pt=="historial")body=histV();
+else body=`<div class="card"><div class="k k3" style="margin:0"><div><b>${M_.sub}</b>salidas</div><div><b>${nf(M_.km,1)} km</b>distancia</div><div><b>${nf(M_.up)} m</b>subida</div><div><b>${fm(M_.t)}</b>en movimiento</div><div><b>${pl.filter(p=>p.t=="peak").length}</b>picos y topos</div><div><b>${L.filter(x=>x.at).length}</b>medallas</div></div></div>${cmpV()}${chartV()}${recV()}${lugV()}<button class="btn o" style="width:100%;margin-top:6px" onclick="S.watch=1;render()">⌚ Transferir datos del reloj</button>`;
+return head+seg+body}
+const hm=(h,add)=>{const[a,b]=h.split(":").map(Number),t=a*60+b+Math.round(add);return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")};
+function actSVG(d,big){const r=d.r,w=big?1080:360,h=big?1350:300,f=fit(r.G,1.3),mh=big?820:300,sc=Math.max(f.w/w,f.w*1.2/(mh*1.2)),vw=w*sc,vh=mh*sc,X=p=>(p[0]-(f.cx-vw/2))/sc,Y=p=>((f.cy+vh/2)-p[1])/sc;
+const B=M.BG,img=`<rect width="${w}" height="${mh}" fill="#eeeae2"/><image href="${M.bg}" x="${X([B[0]])}" y="${Y([0,B[3]])}" width="${(B[2]-B[0])/sc}" height="${(B[3]-B[1])/sc}" preserveAspectRatio="none"/>`;
+const trails=E.map(e=>"M"+e.g.map(p=>X(p).toFixed(1)+","+Y(p).toFixed(1)).join("L")).join(""),rp="M"+r.G.map(p=>X(p).toFixed(1)+","+Y(p).toFixed(1)).join("L");
+const s0=r.G[0],s1=r.G.at(-1),fz=big?1:.34;
+let s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${big?h:mh}" ${big?`width="${w}" height="${h}" font-family="Barlow,system-ui,sans-serif"`:`style="width:100%;display:block;border-radius:16px"`}>${big?`<style>${document.getElementById("fx").textContent}</style>`:""}<rect width="${w}" height="${h}" fill="#0a0a0a"/><svg x="0" y="0" width="${w}" height="${mh}" viewBox="0 0 ${w} ${mh}">${img}<path d="${trails}" stroke="#8b6a45" stroke-width="${big?3:1.2}" opacity=".8" fill="none"/><path d="${rp}" stroke="#0a0a0a" stroke-width="${big?18:7}" fill="none" stroke-linejoin="round" stroke-linecap="round"/><path d="${rp}" stroke="#FFD400" stroke-width="${big?10:4}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+${(()=>{const U=r.pass.filter((x,i,a)=>a.findIndex(y=>y.p.id==x.p.id)==i),pr=x=>x.p.id==r.stops.at(-1)?0:r.stops.includes(x.p.id)?1:x.p.t=="post"?3:2,dots=U.map(x=>[X([x.p.x])-14,Y([0,x.p.y])-14,X([x.p.x])+14,Y([0,x.p.y])+14,x.p.id]),bx=[];return U.sort((a,b)=>pr(a)-pr(b)).map(x=>{const p=[x.p.x,x.p.y],nm=x.p.n.replace(" (collado)","").replace(" (Hotel Humboldt)",""),b=[X(p)+16,Y(p)-22,X(p)+24+nm.length*15,Y(p)+16],ok=big&&!dots.some(o=>o[4]!=x.p.id&&b[0]<o[2]&&b[2]>o[0]&&b[1]<o[3]&&b[3]>o[1])&&!bx.some(o=>b[0]<o[2]&&b[2]>o[0]&&b[1]<o[3]&&b[3]>o[1]);if(ok)bx.push(b);return `<circle cx="${X(p)}" cy="${Y(p)}" r="${big?11:4}" fill="#0a0a0a" stroke="#FFD400" stroke-width="${big?5:2}"/>`+(ok?`<text x="${X(p)+20}" y="${Y(p)+9}" fill="#22301e" font-size="30" font-weight="700" style="paint-order:stroke" stroke="#fff" stroke-width="8" stroke-linejoin="round">${esc(nm)}</text>`:"")}).join("")})()}<circle cx="${X(s0)}" cy="${Y(s0)}" r="${big?16:6}" fill="#FFD400" stroke="#0a0a0a" stroke-width="${big?5:2}"/></svg>`;
+if(big){s+=`<rect width="${w}" height="140" fill="url(#gt)"/><defs><linearGradient id="gt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a0a0a"/><stop offset="1" stop-color="#0a0a0a" stop-opacity="0"/></linearGradient></defs><text x="70" y="96" fill="#FFD400" font-size="46" font-weight="800" letter-spacing="5" font-family="Barlow Condensed">ÁVILA RUTA</text>
+<g font-family="Barlow,sans-serif"><text x="70" y="915" fill="#fff" font-size="${r.n.length>34?52:64}" font-weight="700" font-family="Barlow Condensed">${esc(r.n.length>48?r.n.slice(0,46)+"…":r.n)}</text><text x="70" y="962" fill="#9a9a96" font-size="30">${esc(d.f)} · ${r.pass.length} lugares · ${r.imp?"desde tu reloj":r.junc.length+" cruces"}</text>
+${[["Distancia",nf(r.km,1)+" km"],["Subida","+"+nf(r.up)+" m"],["Tiempo",fm(d.m)]].map(([k,v],i)=>`<text x="${70+i*330}" y="1050" fill="#9a9a96" font-size="26">${k.toUpperCase()}</text><text x="${70+i*330}" y="1118" fill="#FFD400" font-size="72" font-weight="800" font-family="Barlow Condensed">${v}</text>`).join("")}
+<g transform="translate(70,1160)">${(()=>{const pw=940,ph=130,mx=Math.max(...r.G.map(p=>p[2])),mn=Math.min(...r.G.map(p=>p[2])),rg=Math.max(100,mx-mn),pts=r.G.map((p,i)=>`${(r.C[i]/r.L*pw).toFixed(1)},${(ph-(p[2]-mn)/rg*ph).toFixed(1)}`);return `<path d="M0,${ph}L${pts.join("L")}L${pw},${ph}Z" fill="#FFD400" opacity=".2"/><path d="M${pts.join("L")}" stroke="#FFD400" stroke-width="4" fill="none"/><text x="${pw}" y="-10" fill="#9a9a96" font-size="24" text-anchor="end">máx. ${nf(mx)} m</text>`})()}</g></g>`}
+return s+"</svg>"}
+// datos de rendimiento de una salida (los del reloj si se transfirió; si no, los estimados)
+function perf(d){const r=d.r,G=r.G,C=r.C,g=d.imp&&d.imp.g,T=rpT(d),o={mv:d.m,el:d.el&&d.el>d.m?d.el:d.m,emax:Math.max(...G.map(p=>p[2])),emin:Math.min(...G.map(p=>p[2])),real:!!(g&&g.some(p=>p[3]!=null))};
+o.vavg=r.km/(d.m/60);o.pace=d.m/r.km;
+// velocidad máxima sostenida (ventanas de 60 s) y ritmo de subida (metros por hora mientras subes)
+let vmax=0,j=0,ct=0,cu=0,k0=0;for(let i=1;i<G.length;i++){while(j<i&&T[i]-T[j]>60)j++;const dt=T[i]-T[j];if(dt>=30)vmax=Math.max(vmax,(C[i]-C[j])/dt*3.6);if(T[i]-T[k0]>=60){const de=G[i][2]-G[k0][2],tt=T[i]-T[k0];if(de>2&&tt<600){ct+=tt;cu+=de}k0=i}}
+o.vmax=o.real?vmax:null;o.vam=ct>0?cu/(ct/3600):null;
+// parciales por kilómetro
+o.sp=[];let k=1,lt=0,le=G[0][2],li=0;const at=(i,m)=>{const f=(m-C[i-1])/((C[i]-C[i-1])||1);return[T[i-1]+(T[i]-T[i-1])*f,G[i-1][2]+(G[i][2]-G[i-1][2])*f]};
+for(let i=1;i<G.length;i++)while(C[i]>=k*1000){const[t,e]=at(i,k*1000);o.sp.push({k,t:t-lt,de:e-le,len:1});lt=t;le=e;k++}
+const rest=(C.at(-1)-(k-1)*1000)/1000;if(rest>.15)o.sp.push({k,t:T.at(-1)-lt,de:G.at(-1)[2]-le,len:rest});
+const H=g?g.map(p=>p[4]).filter(Boolean):[];if(H.length>10){o.hra=Math.round(H.reduce((a,b)=>a+b,0)/H.length);o.hrm=Math.max(...H)}
+return o}
+// tiempo (s desde la salida) en cada punto del recorrido: real si viene del reloj, estimado si no
+function rpT(d){const r=d.r,g=d.imp&&d.imp.g;if(g&&g.some(p=>p[3]!=null)){let last=0;return g.map(p=>last=p[3]??last)}const tot=d.m*60;return r.C.map(c=>c/(r.L||1)*tot)}
+function rpAt(){const R=S.rp,T=R.T,G=R.d.r.G,t=R.t;let i=1;while(i<T.length-1&&T[i]<t)i++;const f=Math.max(0,Math.min(1,(t-T[i-1])/((T[i]-T[i-1])||1))),a=G[i-1],b=G[i];
+const hr=R.d.imp&&R.d.imp.g[i]&&R.d.imp.g[i][4];return{i:i-1,p:[a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f],s:R.d.r.C[i-1]+(R.d.r.C[i]-R.d.r.C[i-1])*f,hr}}
+const mapOpt=()=>{if(!S.rp)return{route:S.route};const q=rpAt();return{route:S.route,me:q.p,cut:q}};
+function replay(i){const d=S.done[i];S.rp={d,di:i,T:rpT(d),t:0,play:0,spd:1};S.route=d.r;S.selP=null;S.tab="map";S.act=null;const p=d.r.G[0];S.v={cx:p[0],cy:p[1],w:2600};render();rpPlay()}
+function rpPlay(){const R=S.rp;if(!R)return;if(R.play){clearInterval(R.play);R.play=0}else{const tot=R.T.at(-1);if(R.t>=tot)R.t=0;R.play=setInterval(()=>{R.t=Math.min(tot,R.t+tot/(36e3/90)*R.spd);rpTick();if(R.t>=tot){clearInterval(R.play);R.play=0;rpPanel()}},90)}rpPanel()}
+function rpTick(){const q=rpAt();S.v.cx=q.p[0];S.v.cy=q.p[1];drawMap();rpPanel(q)}
+function rpSeek(v){const R=S.rp;R.t=R.T.at(-1)*v/1000;rpTick()}
+function rpEnd(back){const R=S.rp;if(R.play)clearInterval(R.play);S.rp=null;if(back){S.tab="perfil";S.act=R.di;S.route=null}render()}
+function rpPanel(q){const e=$("#rpp");if(e)e.innerHTML=rpInner(q||rpAt())}
+function rpInner(q){const R=S.rp,d=R.d,pass=d.r.pass.filter(x=>x.s<=q.s+1),last=pass.at(-1);
+return `<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><b class="ttl" style="font-size:30px">${hm(d.h,R.t/60)}</b><span class="mu">${fm(R.t/60)} de ${fm(R.T.at(-1)/60)}</span></div>
+<div class="k" style="margin:6px 0"><div><b>${nf(q.s/1000,2)} km</b>recorrido</div><div><b>${nf(q.p[2])} m</b>altitud</div><div><b>${q.hr?q.hr:"—"}</b>${q.hr?"pulso":"sin pulso"}</div><div><b>${pass.length}</b>lugares</div></div>
+<div class="mu" style="min-height:18px">${last?"Último lugar: <b style='color:var(--tx)'>"+esc(last.p.n)+"</b>":"Saliendo…"}</div>
+<input type="range" min="0" max="1000" value="${Math.round(R.t/R.T.at(-1)*1000)}" oninput="rpSeek(+this.value)" aria-label="Momento del recorrido" style="accent-color:#FFD400;padding:0;border:0;background:none">
+<div class="row"><button class="btn" onclick="rpPlay()">${R.play?"❚❚ Pausa":R.t>=R.T.at(-1)?"↺ Repetir":"▶ Reproducir"}</button><button class="btn o" onclick="S.rp.spd=S.rp.spd>=4?1:S.rp.spd*2;rpPanel()">Velocidad ×${R.spd}</button></div>`}
+function rpV(){const d=S.rp.d;return `<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:start"><div><div class="mu">Recorrido recreado${d.imp?" con los datos de tu reloj":""}</div><b class="ttl" style="font-size:19px">${esc(d.r.n)}</b></div><button class="chip" onclick="rpEnd(0)">✕</button></div><div id="rpp" style="margin-top:8px">${rpInner(rpAt())}</div><button class="btn o s" style="width:100%;margin-top:8px" onclick="rpEnd(1)">‹ Volver a tus datos</button></div>`}
+function perfV(d){const o=perf(d),c=(v,l)=>`<div><b>${v}</b>${l}</div>`;
+const rows=[c(fm(o.mv),"en movimiento"),c(fm(o.el),"tiempo total"),c(o.el>o.mv+1?fm(o.el-o.mv):"0 min","paradas"),c(nf(o.vavg,1)+" km/h","velocidad media"),c(o.vmax?nf(o.vmax,1)+" km/h":"—","velocidad máx."),c(o.vam?nf(Math.round(o.vam/10)*10)+" m/h":"—","ritmo de subida"),c("−"+nf(d.r.dn)+" m","bajada"),c(nf(o.emax)+" m","altura máx."),c(nf(o.emin)+" m","altura mín.")];
+if(o.hra)rows.push(c(o.hra+" ppm","pulso medio"),c(o.hrm+" ppm","pulso máx."));
+const ms=Math.max(...o.sp.map(x=>x.t/x.len));
+return `<h3>Rendimiento${o.real?"":" (estimado)"}</h3><div class="card"><div class="k k3" style="margin:0">${rows.join("")}</div>${o.real?"":`<p class="mu" style="margin:8px 0 0">Transfiere los datos de tu reloj para ver tus tiempos reales.</p>`}</div>
+${o.hra?`<h3>Pulso</h3><div class="card">${hrProf(d)}</div>`:""}
+<h3>Parciales por kilómetro</h3><div class="card">${o.sp.map(x=>{const pace=x.t/x.len/60;return `<div class="li" style="padding:5px 0;font-size:14px"><b style="width:52px;flex:none" class="ttl">${x.len<1?nf(x.len,1)+" km":"km "+x.k}</b><div><div class="bar" style="margin:0"><i style="width:${x.t/x.len/ms*100}%"></i></div></div><span style="width:62px;text-align:right;font-weight:600">${Math.floor(pace)}:${String(Math.round(pace%1*60)).padStart(2,"0")}</span><span class="mu" style="width:56px;text-align:right">${x.de>=0?"+":"−"}${nf(Math.abs(Math.round(x.de)))} m</span></div>`}).join("")}<p class="mu" style="margin:6px 0 0">Ritmo en min/km y subida o bajada de cada kilómetro.</p></div>`}
+function hrProf(d){const g=d.imp.g,r=d.r,w=320,h=70,H0=g.map(p=>p[4]||null),H=H0.map((v,i)=>{if(!v)return null;const w_=H0.slice(Math.max(0,i-7),i+8).filter(Boolean);return w_.reduce((a,b)=>a+b,0)/w_.length}),v=H.filter(Boolean),mx=Math.max(...v),mn=Math.min(...v),rg=Math.max(20,mx-mn);let path="",on=0;
+g.forEach((p,i)=>{if(!H[i]){on=0;return}const x=(r.C[i]/(r.L||1)*w).toFixed(1),y=(h-4-(H[i]-mn)/rg*(h-14)).toFixed(1);path+=(on?"L":"M")+x+","+y;on=1});
+return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:${h}px;display:block" role="img" aria-label="Pulso a lo largo del recorrido"><path d="${path}" fill="none" stroke="var(--tx)" stroke-width="1.6"/><text x="2" y="10" font-size="9" fill="var(--mu)">${Math.round(mx)} ppm</text><text x="2" y="${h-6}" font-size="9" fill="var(--mu)">${Math.round(mn)} ppm</text></svg>`}
+function actV(){const d=S.done[S.act],r=d.r,pace=d.m/r.km,k=d.m/r.t;
+return `<button class="back" onclick="S.act=null;render()">‹ Perfil</button>${S.msg&&S.msg.startsWith("✓")?`<div class="card warn" style="font-weight:600">${esc(S.msg)}</div>`:""}${actSVG(d)}<div style="margin-top:12px"><b class="ttl" style="font-size:20px">${esc(r.n)}</b><div class="mu">${d.f} · salida ${d.h} · ${r.rt?"ida y vuelta":"solo ida"}${d.imp?" · ⌚ importada"+(d.el&&d.el>d.m+5?" · "+fm(d.el)+" con paradas":""):""}</div></div><div class="k"><div><b>${nf(r.km,1)} km</b>distancia</div><div><b>+${nf(r.up)} m</b>subida</div><div><b>${fm(d.m)}</b>tiempo</div><div><b>${Math.floor(pace)}:${String(Math.round(pace%1*60)).padStart(2,"0")}</b>min/km</div></div><button class="btn" style="width:100%;margin:4px 0 2px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="replay(${S.act})">▶ Recrear recorrido en el mapa</button>${prof(r,80)}${perfV(d)}
+<h3>Lugares por los que pasaste</h3><div class="card">${r.pass.map(x=>{const tt=x.tt!=null?x.tt/60:r.t*(x.s/r.L)*k;return `<div class="pl"><span class="d">${hm(d.h,tt)}</span><div>${esc(x.p.n)}<div class="mu">km ${nf(x.s/1000,1)} · ${nf(x.p.e)} m</div></div></div>`}).join("")}</div>
+<button class="btn o" style="width:100%" onclick="share()">Compartir en redes</button>${S.msg&&!S.msg.startsWith("✓")?`<p class="mu" style="text-align:center">${S.msg}</p>`:""}`}
+async function share(){const d=S.done[S.act];S.msg="Preparando imagen…";render();
+try{const img=new Image();img.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(actSVG(d,1));await img.decode();const c=document.createElement("canvas");c.width=1080;c.height=1350;c.getContext("2d").drawImage(img,0,0);const b=await new Promise(res=>c.toBlob(res,"image/png"));
+const fn="avila-ruta.png",dw=window.claude&&await window.claude.use("downloads");
+if(dw){await dw.save({filename:fn,data:b});S.msg="Imagen lista: compártela en Instagram, TikTok o WhatsApp."}
+else if(navigator.canShare&&navigator.canShare({files:[new File([b],fn,{type:"image/png"})]})){await navigator.share({files:[new File([b],fn,{type:"image/png"})],title:d.r.n});S.msg=""}
+else{const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;a.click();S.msg="Imagen guardada: compártela en Instagram, TikTok o WhatsApp."}}
+catch(e){S.msg=e&&e.code=="declined"?"":"No se pudo crear la imagen."}render()}
+
+// ---------- Amigos (datos de ejemplo) ----------
+const FR=[
+{id:"am",n:"Andrea Méndez",sub:14,km:118.4,up:12650,t:3480,last:[["Sabas Nieves","Pico Oriental"],"hace 2 días"],f:1},
+{id:"lr",n:"Luis Rodríguez",sub:9,km:71.2,up:8120,t:2210,last:[["Teleférico","Lagunazo","Pico Occidental"],"ayer"],f:1},
+{id:"vg",n:"Valentina Gil",sub:22,km:205.7,up:21400,t:5960,last:[["Galindo","Topo Goering","Pico Naiguatá"],"hace 5 días"],f:1},
+{id:"jp",n:"José Pérez",sub:4,km:24.1,up:2900,t:690,last:[["Sabas Nieves","El Banquito"],"hace 1 semana"],f:1},
+{id:"ct",n:"Carla Torres",sub:11,km:96.3,up:10100,t:2870,last:[["Lomas del Viento","Los Venados"],"hoy"],f:0,why:"Sube desde Lomas del Viento"},
+{id:"dm",n:"Daniel Morales",sub:31,km:290.5,up:30500,t:8400,last:[["Cachimbo","Piedra del Indio","Pico Oriental"],"hace 3 días"],f:0,why:"Club de montaña Ávila Norte"},
+{id:"ms",n:"Mariana Suárez",sub:6,km:41.8,up:4300,t:1150,last:[["Sabas Nieves","Cascada Quebrada Quintero"],"hace 4 días"],f:0,why:"Amiga de Andrea Méndez"}];
+const lastR=f=>mk(f.last[0].map(n=>pn(n).id),{rt:1});
+function amigosV(){const M_=me(),fs=FR.filter(f=>f.f),sg=FR.filter(f=>!f.f),rk=[...fs,{...M_,id:"yo",n:S.u+" (tú)"}].sort((a,b)=>b.km-a.km);
+const seg=`<div class="seg">${[["amigos","Amigos"],["ranking","Ranking"],["conocer","Conocer gente"]].map(([k,n])=>`<button class="${S.ft==k?"on":""}" onclick="S.ft='${k}';render()">${n}</button>`).join("")}</div>`;
+if(S.ft=="ranking")return seg+`<p class="mu" style="margin:0 2px 8px">Kilómetros acumulados en el Ávila</p>`+rk.map((f,i)=>`<div class="card li"${f.id!="yo"?` style="cursor:pointer" onclick="S.fr='${f.id}';render()"`:""}><b style="width:18px;color:${i<3?"var(--tx)":"var(--mu)"}">${i+1}</b><span class="av">${ini(f.n)}</span><div><b>${esc(f.n)}</b><div class="mu">${f.sub} subidas · +${nf(f.up)} m</div></div><b>${nf(f.km,1)} km</b></div>`).join("");
+if(S.ft=="conocer")return seg+`<p class="mu" style="margin:0 2px 8px">Personas que suben rutas parecidas a las tuyas</p>`+sg.map(f=>`<div class="card li"><span class="av">${ini(f.n)}</span><div><b>${f.n}</b><div class="mu">${f.why}</div><div class="mu">${f.sub} subidas · ${nf(f.km,1)} km</div></div><button class="btn s" onclick="follow('${f.id}')">Seguir</button></div>`).join("")||`<p class="mu" style="text-align:center">Ya sigues a todas las personas sugeridas.</p>`;
+return seg+(fs.map(f=>`<div class="card" style="cursor:pointer" onclick="S.fr='${f.id}';render()"><div class="li"><span class="av">${ini(f.n)}</span><div><b>${f.n}</b><div class="mu">Subió ${esc(lastR(f).n)} · ${f.last[1]}</div></div><span class="mu">›</span></div><div class="k k3" style="margin-bottom:0"><div><b>${f.sub}</b>subidas</div><div><b>${nf(f.km,1)} km</b>distancia</div><div><b>+${nf(f.up)} m</b>subida</div></div></div>`).join("")||`<p class="mu" style="text-align:center">Aún no tienes amigos. Busca gente en “Conocer gente”.</p>`)}
+function follow(id){FR.find(f=>f.id==id).f=1;save();render()}
+function frV(){const f=FR.find(x=>x.id==S.fr),M_=me(),rows=[["Subidas","sub",v=>v],["Distancia","km",v=>nf(v,1)+" km"],["Subida","up",v=>"+"+nf(v)+" m"],["Tiempo","t",v=>fm(v)]];
+return `<button class="back" onclick="S.fr=null;render()">‹ Amigos</button><div class="card"><div class="li"><span class="av">${ini(f.n)}</span><div><b class="ttl" style="font-size:20px">${f.n}</b><div class="mu">Última: ${esc(lastR(f).n)} · ${f.last[1]}</div></div>${f.f?`<span class="chip">Amigo</span>`:""}</div></div><h3>Comparar</h3><div class="card"><div class="cmp"><b class="l">Tú</b><span></span><b>${f.n.split(" ")[0]}</b></div>${rows.map(([n,k,fmt])=>`<div class="cmp"><span class="l ${M_[k]>f[k]?"w":""}">${fmt(M_[k])}</span><span class="c">${n}</span><span class="${f[k]>M_[k]?"w":""}">${fmt(f[k])}</span></div><div style="display:flex;gap:4px;margin-bottom:6px"><div class="bar" style="flex:1;transform:scaleX(-1)"><i style="width:${100*M_[k]/Math.max(M_[k],f[k],1)}%"></i></div><div class="bar" style="flex:1"><i style="width:${100*f[k]/Math.max(M_[k],f[k],1)}%"></i></div></div>`).join("")}<p class="mu" style="margin:6px 0 0">● marca quién va adelante en cada dato.</p></div><button class="btn o" style="width:100%" onclick="openR(lastR(FR.find(x=>x.id=='${f.id}')))">Ver su última ruta en el mapa</button>`}
+
+// ---------- Registro y navegación de la app ----------
+function login(){return `<header><b>ÁVILA RUTA</b></header><main><div class="card" style="margin-top:24px"><h2 style="margin:0 0 4px;font-size:30px">Crea tu cuenta</h2><p class="mu">Para guardar tus subidas, tiempos y retos.</p><input id="nm" placeholder="Nombre"><input id="em" placeholder="Correo electrónico" type="email"><input id="pw" placeholder="Contraseña (mínimo 6 caracteres)" type="password"><p class="err">${S.err||""}</p><button class="btn" style="width:100%" onclick="reg()">Crear cuenta</button></div><p class="mu" style="text-align:center">Mapa real de OpenStreetMap. Amigos, clima y estado de senderos son de ejemplo por ahora.</p></main>`}
+function reg(){const n=$("#nm").value.trim(),e=$("#em").value.trim(),p=$("#pw").value;S.err=!n?"Escribe tu nombre.":!/^\S+@\S+\.\S+$/.test(e)?"Correo no válido.":p.length<6?"La contraseña necesita 6 caracteres o más.":"";if(!S.err){S.u=n;save()}render()}
+const IC={
+map:`<path d="M3 6.5l6-2.5 6 2.5 6-2.5v13.5l-6 2.5-6-2.5-6 2.5z"/><path d="M9 4v13.5M15 6.5V20" fill="none"/>`,
+list:`<path d="M2.5 19.5l6.5-11 4 6.5 2.5-3.5 6 8z"/><circle cx="17" cy="6" r="1.8"/>`,
+clima:`<path d="M7 18.5h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7 11.6a3.45 3.45 0 0 0 0 6.9z"/>`,
+amigos:`<path d="M15.6 14.4c2.7.2 4.5 2 5 5.1h-4.4"/><circle cx="16.3" cy="8.8" r="2.6"/><circle cx="9" cy="8" r="3.3"/><path d="M2.8 19.5c.6-3.5 3-5.4 6.2-5.4s5.6 1.9 6.2 5.4z"/>`,
+perfil:`<circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c.8-4 3.7-6.3 7.5-6.3s6.7 2.3 7.5 6.3z"/>`};
+function render(){const a=$("#app");if(!S.u){a.innerHTML=login();return}
+const T=[["map","Mapa"],["list","Rutas"],["clima","Clima"],["amigos","Amigos"],["perfil","Perfil"]];
+const v=S.tab=="perfil"&&S.act!=null?actV():S.tab=="amigos"&&S.fr?frV():{map:mapV,list:listV,clima:climaV,amigos:amigosV,perfil:perfilV}[S.tab]();
+a.innerHTML=`<header><b>ÁVILA RUTA</b><div class="hb"><button class="wt ${S.dl?"on":""}" onclick="S.dl=S.dl?0:1;S.watch=0;render()" aria-label="Descargar mapa"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10.5l5 5 5-5" fill="none"/><path d="M5 19.5h14" fill="none"/></svg>${DL.ok?"Mapa ✓":"Descargar mapa"}</button><button class="wt ${S.watch?"on":""}" onclick="S.watch=!S.watch;S.dl=0;S.imsg='';render()" aria-label="Conectar reloj"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="3.5"/><path d="M9 6l.8-3h4.4l.8 3M9 18l.8 3h4.4l.8-3M12 9.5V12l1.8 1.2" fill="none"/></svg>Reloj</button></div></header><main>${v}</main><nav>${T.map(([k,n])=>`<button class="${S.tab==k?"on":""}" onclick="S.rp&&rpEnd(0);S.tab='${k}';S.act=null;S.fr=null;S.msg='';render()"><svg viewBox="0 0 24 24">${IC[k]}</svg>${n}</button>`).join("")}</nav>${S.watch?watchV():""}${S.dl?dlV():""}${S.nv?navV():""}`;
+const m=$("#map");if(m)bindMap(m,()=>S.v,v=>Object.assign(S.v,v),drawMap,tapMap);const nm=$("#nmap");if(nm)bindMap(nm,()=>S.nv.v,v=>Object.assign(S.nv.v,v),paintNav)}
+// ---------- Descargar mapa: deja todo guardado en el teléfono de una vez ----------
+const DLK="avila-ruta-mapa",DL={ok:0,at:0,run:0,st:[],mb:null};try{const x=JSON.parse(localStorage.getItem(DLK)||"null");if(x){DL.ok=1;DL.at=x.at;DL.mb=x.mb}}catch(e){}
+const DLS=["App y tipografía","Mapa del Ávila y relieve","113 km de senderos y 99 cruces","Rutas, entradas y destinos","Clima de los 4 puntos"];
+async function dlMap(){if(DL.run)return;DL.run=1;DL.st=[];DL.err="";dlPaint();const ok=i=>{DL.st[i]=1;dlPaint()},wait=t=>new Promise(r=>setTimeout(r,t));
+try{if("caches" in window&&location.protocol=="https:"){const c=await caches.open("avila-ruta-v2");await c.addAll(["./","index.html","manifest.webmanifest","icon-192.png","icon-512.png"])}ok(0);
+ await wait(200);ok(1);await wait(200);ok(2);await wait(200);ok(3);
+ for(const x of WXP)await loadWx(x.k,1);DL.st[4]=S.wxe?2:1;
+ try{await navigator.storage?.persist()}catch(e){}
+ let mb=null;try{const e=await navigator.storage?.estimate();if(e&&e.usage)mb=e.usage/1048576}catch(e){}if(!mb)mb=new Blob([document.documentElement.outerHTML]).size/1048576;
+ DL.ok=1;DL.at=Date.now();DL.mb=mb;try{localStorage.setItem(DLK,JSON.stringify({at:DL.at,mb}))}catch(e){}}
+catch(e){DL.err=navigator.onLine===false?"Sin señal: conéctate a internet para descargar el mapa.":"No se pudo terminar la descarga. Inténtalo de nuevo."}
+DL.run=0;render()}
+function dlPaint(){const e=$("#dlp");if(e)e.innerHTML=dlInner()}
+function dlInner(){const n=DL.st.filter(Boolean).length;
+return `${DLS.map((t,i)=>`<div class="li" style="padding:7px 0;border-bottom:1px solid var(--bd)"><div>${t}</div><span style="font-weight:700;color:${DL.st[i]==2?"var(--mu)":"var(--tx)"}">${DL.st[i]==1?"✓":DL.st[i]==2?"sin señal":DL.run&&i==n?"…":""}</span></div>`).join("")}
+<div class="bar" style="margin:12px 0 6px"><i style="width:${(DL.run?n/DLS.length:DL.ok?1:0)*100}%"></i></div>
+${DL.err?`<p class="err">${DL.err}</p>`:DL.ok&&!DL.run?`<p style="margin:6px 0;font-weight:600">✓ Listo: puedes usar el mapa, las rutas y la navegación sin señal.</p><p class="mu" style="margin:0">Descargado el ${fdate(DL.at)}${DL.mb?" · "+nf(DL.mb,1)+" MB en el teléfono":""}. El clima queda guardado con la hora en que se descargó.</p>`:""}
+<button class="btn" style="width:100%;margin-top:12px" onclick="dlMap()" ${DL.run?"disabled":""}>${DL.run?"Descargando…":DL.ok?"Actualizar descarga":"Descargar mapa"}</button>`}
+function dlV(){return `<div class="sh" onclick="DL.run||(S.dl=0,render())"><div class="card" onclick="event.stopPropagation()"><div style="display:flex;justify-content:space-between;align-items:start;gap:8px"><div><b class="ttl" style="font-size:26px">Descargar mapa</b><div class="mu">Todo el Ávila en tu teléfono para usarlo sin señal en la montaña</div></div><button class="chip" onclick="S.dl=0;render()">✕</button></div><div id="dlp" style="margin-top:10px">${dlInner()}</div>${OFF.app||!OFF.sw?"":`<p class="mu" style="margin:10px 0 0">Consejo: instala la app en la pantalla de inicio para abrirla sin señal.</p>`}</div></div>`}
+// ---------- App instalable: guardar todo en el teléfono para usarlo sin señal ----------
+const OFF={ok:0,ev:null,app:matchMedia("(display-mode: standalone)").matches||navigator.standalone};
+const IOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+function instV(){if(OFF.app||!OFF.sw)return "";return `<div class="card"><b>Instala Ávila Ruta en tu teléfono</b><p class="mu" style="margin:4px 0 10px">${OFF.ok?"✓ El mapa y todas las rutas ya están guardados en este teléfono.":"Guardando el mapa en el teléfono…"} Instálala para abrirla sin señal, como cualquier app.</p>${OFF.ev?`<button class="btn" style="width:100%" onclick="OFF.ev.prompt()">Instalar app</button>`:`<p class="mu" style="margin:0">${IOS?"En Safari: toca Compartir y luego <b>Agregar a pantalla de inicio</b>.":"En Chrome: abre el menú ⋮ y toca <b>Instalar app</b> o <b>Agregar a pantalla de inicio</b>."}</p>`}</div>`}
+if("serviceWorker" in navigator&&location.protocol=="https:"){OFF.sw=1;navigator.serviceWorker.register("sw.js").then(()=>navigator.serviceWorker.ready).then(()=>{OFF.ok=1;try{navigator.storage?.persist()}catch(e){}if(!S.nv)render()}).catch(()=>{OFF.sw=0;render()})}
+addEventListener("beforeinstallprompt",e=>{e.preventDefault();OFF.ev=e;if(!S.nv)render()});
+addEventListener("appinstalled",()=>{OFF.app=1;if(!S.nv)render()});
+FR.forEach(f=>{if(S.frIds)f.f=S.frIds.includes(f.id)?1:0});
+render();
+if(/[?&]compartido=1/.test(location.search)&&"caches" in window)caches.open("avila-compartido").then(async c=>{const r=await c.match("archivo");history.replaceState(null,"",location.pathname);if(!r||!S.u)return;const b=await r.blob(),n=r.headers.get("x-nombre")||"actividad.fit";await c.delete("archivo");S.watch=1;importFile(new File([b],n))}).catch(()=>{});
+</script></body></html>

@@ -22,5 +22,29 @@
    "type": "image/png",
    "purpose": "any maskable"
   }
- ]
+ ],
+ "share_target": {
+  "action": "./compartir",
+  "method": "POST",
+  "enctype": "multipart/form-data",
+  "params": {
+   "title": "title",
+   "files": [
+    {
+     "name": "actividad",
+     "accept": [
+      ".fit",
+      ".gpx",
+      ".tcx",
+      ".zip",
+      "application/gpx+xml",
+      "application/vnd.ant.fit",
+      "application/octet-stream",
+      "application/zip",
+      "text/xml"
+     ]
+    }
+   ]
+  }
+ }
 }
