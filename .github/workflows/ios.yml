@@ -18,7 +18,8 @@ on:
 jobs:
   compilar:
     name: Compilar para iPhone (simulador)
-    runs-on: macos-15
+    # los Mac con chip de Apple (arm64) de GitHub suelen estar saturados; los Intel tienen más disponibilidad
+    runs-on: macos-15-intel
     steps:
       - uses: actions/checkout@v4
 
