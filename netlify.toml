@@ -1,0 +1,21 @@
+# Netlify publica la app tal cual está en la raíz del repositorio (index.html ya viene armado).
+[build]
+  publish = "."
+  command = "echo 'La app ya está armada en index.html'"
+
+# El service worker y el manifiesto siempre frescos, para que la app instalada se actualice sola.
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"
